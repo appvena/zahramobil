@@ -48,14 +48,14 @@ const GOLD = "#C9A84C";
 // ─── NAVBAR (shared) ─────────────────────────────────────────────────────────
 function Navbar({ onNav }) {
   return (
-    <nav style={{ position: "absolute", top: 0, left: 0, right: 0, zIndex: 50, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "28px 48px" }}>
-      <button onClick={() => onNav("home")} style={{ display: "flex", alignItems: "center", gap: 12, background: "none", border: "none", cursor: "pointer" }}>
-        <div style={{ width: 36, height: 36, background: GOLD, borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, color: "#0a0a0a", fontSize: 16 }}>Z</div>
-        <span style={{ color: "#fff", fontWeight: 700, fontSize: 20, letterSpacing: "0.04em" }}>ZAHRA <span style={{ color: GOLD }}>MOBIL</span></span>
+    <nav style={{ position: "absolute", top: 0, left: 0, right: 0, zIndex: 50, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px clamp(16px, 4vw, 48px)", boxSizing: "border-box", maxWidth: "100vw" }}>
+      <button onClick={() => onNav("home")} style={{ display: "flex", alignItems: "center", gap: 10, background: "none", border: "none", cursor: "pointer", flexShrink: 0 }}>
+        <div style={{ width: 32, height: 32, background: GOLD, borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, color: "#0a0a0a", fontSize: 15, flexShrink: 0 }}>Z</div>
+        <span style={{ color: "#fff", fontWeight: 700, fontSize: "clamp(13px, 3vw, 20px)", letterSpacing: "0.02em", whiteSpace: "nowrap" }}>ZAHRA <span style={{ color: GOLD }}>MOBIL</span></span>
       </button>
-      <div style={{ display: "flex", gap: 36 }}>
-        {[["Katalog", "katalog"], ["Simulasi Kredit", "simulasi-kredit"], ["Hubungi Kami", "kontak-section"]].map(([label, id]) => (
-          <a key={id} href={`#${id}`} onClick={() => onNav("home")} style={{ color: "rgba(255,255,255,0.85)", textDecoration: "none", fontSize: 14, letterSpacing: "0.06em", fontWeight: 500, textTransform: "uppercase" }}>
+      <div style={{ display: "flex", gap: "clamp(8px, 2vw, 36px)", flexShrink: 1, overflow: "hidden" }}>
+        {[["Katalog", "katalog"], ["Kredit", "simulasi-kredit"], ["Kontak", "kontak-section"]].map(([label, id]) => (
+          <a key={id} href={`#${id}`} onClick={() => onNav("home")} style={{ color: "rgba(255,255,255,0.85)", textDecoration: "none", fontSize: "clamp(10px, 2.2vw, 14px)", letterSpacing: "0.04em", fontWeight: 500, textTransform: "uppercase", whiteSpace: "nowrap" }}>
             {label}
           </a>
         ))}
@@ -116,7 +116,7 @@ function HeroSlider({ cars, onSelectCar }) {
         <div style={{ position: "absolute", inset: 0, zIndex: 3, background: "radial-gradient(ellipse at 50% 100%, rgba(0,0,0,0.5) 0%, transparent 60%)" }} />
       )}
 
-      <div style={{ position: "absolute", inset: 0, zIndex: 5, display: "flex", flexDirection: "column", justifyContent: car.heroStyle === "floating" ? "flex-start" : "center", padding: car.heroStyle === "floating" ? "140px 48px 0" : "0 48px 80px" }}>
+      <div style={{ position: "absolute", inset: 0, zIndex: 5, display: "flex", flexDirection: "column", justifyContent: car.heroStyle === "floating" ? "flex-start" : "center", padding: car.heroStyle === "floating" ? "120px clamp(16px, 4vw, 48px) 0" : "0 clamp(16px, 4vw, 48px) 80px", boxSizing: "border-box" }}>
         <div key={`txt-${cur}`} style={{ maxWidth: 620, animation: "heroTextIn 0.8s cubic-bezier(.25,.8,.25,1) both", animationDelay: "0.15s", textAlign: car.heroStyle === "floating" ? "center" : "left", margin: car.heroStyle === "floating" ? "0 auto" : "0" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: car.heroStyle === "floating" ? "center" : "flex-start", gap: 12, marginBottom: 20 }}>
             <div style={{ width: 32, height: 2, background: GOLD }} />
@@ -221,7 +221,7 @@ function CatalogSection({ cars, onView }) {
   const pillStyle = (active) => ({ padding: "7px 18px", borderRadius: 99, border: `1.5px solid ${active ? GOLD : "#333"}`, background: active ? GOLD : "transparent", color: active ? "#0a0a0a" : "#888", cursor: "pointer", fontSize: 13, fontWeight: active ? 700 : 500, transition: "all 0.2s" });
 
   return (
-    <section id="katalog" style={{ background: "#0d0d0d", padding: "80px 48px" }}>
+    <section id="katalog" style={{ background: "#0d0d0d", padding: "60px clamp(16px, 4vw, 48px)" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <div style={{ marginBottom: 48 }}>
           <div style={{ color: GOLD, fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 600, marginBottom: 12 }}>— Koleksi Kami</div>
@@ -239,7 +239,7 @@ function CatalogSection({ cars, onView }) {
           </div>
           <div>
             <div style={{ color: "#555", fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8 }}>Tipe</div>
-            <div style={{ display: "flex", gap: 6 }}>{TYPES.map(t => <button key={t} onClick={() => setType(t)} style={pillStyle(type === t)}>{t}</button>)}</div>
+            <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>{TYPES.map(t => <button key={t} onClick={() => setType(t)} style={pillStyle(type === t)}>{t}</button>)}</div>
           </div>
           <div style={{ flex: "0 0 200px" }}>
             <div style={{ color: "#555", fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8 }}>Maks. Harga: <span style={{ color: GOLD }}>{fmtShort(maxPrice * 1e6)}</span></div>
@@ -543,7 +543,7 @@ function KreditSection() {
   );
 
   return (
-    <section id="simulasi-kredit" style={{ background: "#0a0a0a", padding: "80px 48px" }}>
+    <section id="simulasi-kredit" style={{ background: "#0a0a0a", padding: "60px clamp(16px, 4vw, 48px)" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <div style={{ marginBottom: 48 }}>
           <div style={{ color: GOLD, fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 600, marginBottom: 12 }}>— Perencanaan</div>
@@ -581,7 +581,7 @@ function KontakSection() {
   const inp = { background: "#1a1a1a", border: "1px solid #333", borderRadius: 6, padding: "12px 16px", color: "#f5f5f5", fontSize: 14, outline: "none", width: "100%", boxSizing: "border-box" };
 
   if (sent) return (
-    <section id="kontak-section" style={{ background: "#0d0d0d", padding: "80px 48px", textAlign: "center" }}>
+    <section id="kontak-section" style={{ background: "#0d0d0d", padding: "60px clamp(16px, 4vw, 48px)", textAlign: "center" }}>
       <div style={{ fontSize: 56, marginBottom: 20 }}>✅</div>
       <h2 style={{ color: "#f5f5f5", margin: "0 0 12px", fontSize: 28, fontWeight: 700 }}>Pesan Terkirim!</h2>
       <p style={{ color: "#888", fontSize: 16 }}>Tim kami akan menghubungi Anda segera.</p>
@@ -589,7 +589,7 @@ function KontakSection() {
   );
 
   return (
-    <section id="kontak-section" style={{ background: "#0d0d0d", padding: "80px 48px" }}>
+    <section id="kontak-section" style={{ background: "#0d0d0d", padding: "60px clamp(16px, 4vw, 48px)" }}>
       <div style={{ maxWidth: 700, margin: "0 auto" }}>
         <div style={{ marginBottom: 40 }}>
           <div style={{ color: GOLD, fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 600, marginBottom: 12 }}>— Hubungi Kami</div>
