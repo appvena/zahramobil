@@ -51,7 +51,7 @@ function Navbar({ onNav }) {
   return (
     <nav style={{ position: "absolute", top: 0, left: 0, right: 0, zIndex: 50, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px clamp(16px, 4vw, 48px)", boxSizing: "border-box", maxWidth: "100vw" }}>
       <button onClick={() => onNav("home")} style={{ display: "flex", alignItems: "center", gap: 10, background: "none", border: "none", cursor: "pointer", flexShrink: 0 }}>
-        <div style={{ width: 32, height: 32, background: GOLD, borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, color: "#0a0a0a", fontSize: 15, flexShrink: 0 }}>Z</div>
+        <img src="/zahramobil/logo.png" alt="Zahra Mobil" style={{ height: 36, width: "auto", flexShrink: 0, objectFit: "contain" }} />
         <span style={{ color: "#fff", fontWeight: 700, fontSize: "clamp(13px, 3vw, 20px)", letterSpacing: "0.02em", whiteSpace: "nowrap" }}>ZAHRA <span style={{ color: GOLD }}>MOBIL</span></span>
       </button>
       <div style={{ display: "flex", gap: "clamp(8px, 2vw, 36px)", flexShrink: 1, overflow: "hidden" }}>
@@ -522,7 +522,7 @@ function Footer() {
         <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 32, marginBottom: 40 }}>
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
-              <div style={{ width: 32, height: 32, background: GOLD, borderRadius: 5, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, color: "#0a0a0a", fontSize: 14 }}>Z</div>
+              <img src="/zahramobil/logo.png" alt="Zahra Mobil" style={{ height: 32, width: "auto", objectFit: "contain" }} />
               <span style={{ color: "#fff", fontWeight: 700, fontSize: 18 }}>ZAHRA <span style={{ color: GOLD }}>MOBIL</span></span>
             </div>
             <p style={{ color: "#555", fontSize: 13, lineHeight: 1.7, maxWidth: 280 }}>Dealer mobil bekas terpercaya dengan inspeksi 150+ titik dan jaminan transparansi penuh.</p>
@@ -535,7 +535,7 @@ function Footer() {
           ))}
         </div>
         <div style={{ borderTop: "1px solid #1a1a1a", paddingTop: 24, display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
-          <span style={{ color: "#333", fontSize: 12 }}>© 2026 Zahra Mobil. All rights reserved.</span>
+          <span style={{ color: "#333", fontSize: 12 }}>©2026 SRISP. All rights reserved.</span>
           <span style={{ color: "#333", fontSize: 12 }}>Powered by Firebase × Next.js</span>
         </div>
       </div>
