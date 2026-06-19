@@ -43,7 +43,8 @@ const TYPES = ["Semua", ...new Set(CARS.map(c => c.type))];
 const fmt = (n) => new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0 }).format(n);
 const fmtShort = (n) => n >= 1e9 ? `${(n / 1e9).toFixed(2)} M` : `${(n / 1e6).toFixed(0)} Jt`;
 
-const GOLD = "#C9A84C";
+const SILVER = "#C8CDD2";
+const GOLD = SILVER; // alias dipertahankan agar seluruh kode lama tetap konsisten memakai warna baru
 
 // ─── NAVBAR (shared) ─────────────────────────────────────────────────────────
 function Navbar({ onNav }) {
@@ -54,11 +55,14 @@ function Navbar({ onNav }) {
         <span style={{ color: "#fff", fontWeight: 700, fontSize: "clamp(13px, 3vw, 20px)", letterSpacing: "0.02em", whiteSpace: "nowrap" }}>ZAHRA <span style={{ color: GOLD }}>MOBIL</span></span>
       </button>
       <div style={{ display: "flex", gap: "clamp(8px, 2vw, 36px)", flexShrink: 1, overflow: "hidden" }}>
-        {[["Katalog", "katalog"], ["Kredit", "simulasi-kredit"], ["Kontak", "kontak-section"]].map(([label, id]) => (
-          <a key={id} href={`#${id}`} onClick={() => onNav("home")} style={{ color: "rgba(255,255,255,0.85)", textDecoration: "none", fontSize: "clamp(10px, 2.2vw, 14px)", letterSpacing: "0.04em", fontWeight: 500, textTransform: "uppercase", whiteSpace: "nowrap" }}>
+        {[["Katalog", "katalog"]].map(([label, id]) => (
+          <a key={id} href={`#${id}`} onClick={() => onNav("home")} style={{ color: "rgba(255,255,255,0.85)", textDecoration: "none", fontSize: "clamp(10px, 2.2vw, 14px)", letterSpacing: "0.08em", fontWeight: 400, textTransform: "uppercase", whiteSpace: "nowrap" }}>
             {label}
           </a>
         ))}
+        <a href="https://wa.me/628116707099" target="_blank" rel="noreferrer" style={{ color: "rgba(255,255,255,0.85)", textDecoration: "none", fontSize: "clamp(10px, 2.2vw, 14px)", letterSpacing: "0.08em", fontWeight: 400, textTransform: "uppercase", whiteSpace: "nowrap" }}>
+          Kontak
+        </a>
       </div>
     </nav>
   );
@@ -124,16 +128,16 @@ function HeroSlider({ cars, onSelectCar }) {
         <div key={`txt-${cur}`} style={{ maxWidth: 620, animation: "heroTextIn 0.8s cubic-bezier(.25,.8,.25,1) both", animationDelay: "0.15s", textAlign: car.heroStyle === "floating" ? "center" : "left", margin: car.heroStyle === "floating" ? "0 auto" : "0" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: car.heroStyle === "floating" ? "center" : "flex-start", gap: 12, marginBottom: car.heroStyle === "floating" ? 12 : 20 }}>
             <div style={{ width: 32, height: 2, background: GOLD }} />
-            <span style={{ color: GOLD, fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 600 }}>{car.brand} — {car.type}</span>
+            <span style={{ color: GOLD, fontSize: 11, letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 400 }}>{car.brand} — {car.type}</span>
           </div>
-          <h1 style={{ color: "#fff", fontSize: car.heroStyle === "floating" ? "clamp(28px, 4.5vw, 56px)" : "clamp(36px, 5vw, 68px)", fontWeight: 800, lineHeight: 1.05, margin: car.heroStyle === "floating" ? "0 0 10px" : "0 0 16px", letterSpacing: "-0.02em" }}>{car.model}</h1>
+          <h1 style={{ color: "#fff", fontSize: car.heroStyle === "floating" ? "clamp(28px, 4.5vw, 56px)" : "clamp(36px, 5vw, 68px)", fontWeight: 300, lineHeight: 1.08, margin: car.heroStyle === "floating" ? "0 0 10px" : "0 0 16px", letterSpacing: "0.01em" }}>{car.model}</h1>
           {car.heroStyle !== "floating" && <p style={{ color: "rgba(255,255,255,0.7)", fontSize: 16, lineHeight: 1.7, margin: "0 0 12px", maxWidth: 480 }}>{car.desc}</p>}
-          <div style={{ color: GOLD, fontSize: car.heroStyle === "floating" ? "clamp(18px, 2.5vw, 28px)" : "clamp(22px, 3vw, 32px)", fontWeight: 700, letterSpacing: "-0.01em", margin: car.heroStyle === "floating" ? "0 0 18px" : "0 0 32px" }}>{fmt(car.price)}</div>
-          <div style={{ display: "flex", gap: 14, justifyContent: car.heroStyle === "floating" ? "center" : "flex-start" }}>
-            <button onClick={() => onSelectCar(car)} style={{ padding: "14px 32px", background: GOLD, color: "#0a0a0a", border: "none", borderRadius: 4, fontWeight: 700, fontSize: 14, cursor: "pointer", letterSpacing: "0.05em", textTransform: "uppercase" }}>
+          <div style={{ color: GOLD, fontSize: car.heroStyle === "floating" ? "clamp(16px, 2.2vw, 24px)" : "clamp(18px, 2.5vw, 26px)", fontWeight: 300, letterSpacing: "0.03em", margin: car.heroStyle === "floating" ? "0 0 18px" : "0 0 32px" }}>{fmt(car.price)}</div>
+          <div style={{ display: "flex", gap: 10, justifyContent: car.heroStyle === "floating" ? "center" : "flex-start", marginTop: 28 }}>
+            <button onClick={() => onSelectCar(car)} style={{ padding: "11px 22px", background: "transparent", color: "#fff", border: `1px solid ${SILVER}cc`, borderRadius: 2, fontWeight: 400, fontSize: 11, cursor: "pointer", letterSpacing: "0.12em", textTransform: "uppercase", transition: "all 0.25s" }}>
               Lihat Detail & Rapor
             </button>
-            <button onClick={() => document.getElementById("katalog").scrollIntoView({ behavior: "smooth" })} style={{ padding: "14px 32px", background: "transparent", color: "#fff", border: "1.5px solid rgba(255,255,255,0.4)", borderRadius: 4, fontWeight: 600, fontSize: 14, cursor: "pointer", letterSpacing: "0.05em", textTransform: "uppercase" }}>
+            <button onClick={() => document.getElementById("katalog").scrollIntoView({ behavior: "smooth" })} style={{ padding: "11px 22px", background: "transparent", color: "rgba(255,255,255,0.6)", border: "1px solid rgba(255,255,255,0.25)", borderRadius: 2, fontWeight: 400, fontSize: 11, cursor: "pointer", letterSpacing: "0.12em", textTransform: "uppercase", transition: "all 0.25s" }}>
               Lihat Katalog
             </button>
           </div>
@@ -418,7 +422,7 @@ function InstantCheckout({ car, onSubmit }) {
 
         {form.metode === "Ajukan Kredit" && (
           <div style={{ background: "#0d0d0d", border: "1px solid #2a2a2a", borderRadius: 8, padding: 14, color: "#777", fontSize: 12.5, lineHeight: 1.6 }}>
-            💡 Tim Sales akan membantu proses pengajuan ke partner leasing (Adira, BCA Finance, Mandiri Tunas) setelah data terverifikasi. Gunakan Simulasi Kredit di bawah untuk estimasi cicilan.
+            💡 Tim Sales akan membantu proses pengajuan ke partner leasing (Adira, BCA Finance, Mandiri Tunas) setelah data terverifikasi. Lihat estimasi cicilan di samping.
           </div>
         )}
 
@@ -524,99 +528,6 @@ function DetailPage({ car, onBack, onCheckoutSubmit }) {
   );
 }
 
-// ─── KREDIT SECTION (halaman utama) ──────────────────────────────────────────
-function KreditSection() {
-  const [harga, setHarga] = useState(500);
-  const [dp, setDp] = useState(20);
-  const [tenor, setTenor] = useState(48);
-  const [bunga, setBunga] = useState(6);
-
-  const pokokPinjaman = (harga * 1e6) * (1 - dp / 100);
-  const bungaPerBulan = bunga / 100 / 12;
-  const cicilan = pokokPinjaman * bungaPerBulan / (1 - Math.pow(1 + bungaPerBulan, -tenor));
-  const totalBayar = cicilan * tenor + (harga * 1e6) * (dp / 100);
-
-  const SliderInput = ({ label, value, min, max, step, onChange, display, color = GOLD }) => (
-    <div style={{ marginBottom: 28 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
-        <span style={{ color: "#888", fontSize: 13 }}>{label}</span>
-        <span style={{ color, fontWeight: 700, fontSize: 16 }}>{display}</span>
-      </div>
-      <input type="range" min={min} max={max} step={step} value={value} onChange={e => onChange(Number(e.target.value))} style={{ width: "100%", accentColor: color, height: 4 }} />
-    </div>
-  );
-
-  return (
-    <section id="simulasi-kredit" style={{ background: "#0a0a0a", padding: "60px clamp(16px, 4vw, 48px)" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-        <div style={{ marginBottom: 48 }}>
-          <div style={{ color: GOLD, fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 600, marginBottom: 12 }}>— Perencanaan</div>
-          <h2 style={{ color: "#f5f5f5", fontSize: "clamp(28px, 4vw, 46px)", fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>Simulasi Kredit</h2>
-        </div>
-        <div className="zm-grid-2col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}>
-          <div style={{ background: "#141414", border: "1px solid #2a2a2a", borderRadius: 12, padding: 36 }}>
-            <SliderInput label="Harga Kendaraan" value={harga} min={100} max={2000} step={50} onChange={setHarga} display={fmtShort(harga * 1e6)} />
-            <SliderInput label="Uang Muka (DP)" value={dp} min={10} max={60} step={5} onChange={setDp} display={`${dp}% — ${fmtShort((harga * 1e6) * dp / 100)}`} color="#5B9BD5" />
-            <SliderInput label="Tenor" value={tenor} min={12} max={60} step={12} onChange={setTenor} display={`${tenor} bulan`} color="#68D391" />
-            <SliderInput label="Bunga Per Tahun" value={bunga} min={3} max={15} step={0.5} onChange={setBunga} display={`${bunga}%`} color="#F6AD55" />
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            {[{ label: "Cicilan Per Bulan", val: fmt(cicilan), accent: GOLD, big: true },
-              { label: "Uang Muka (DP)", val: fmt((harga * 1e6) * dp / 100), accent: "#5B9BD5" },
-              { label: "Pokok Pinjaman", val: fmt(pokokPinjaman), accent: "#888" },
-              { label: "Total Pembayaran", val: fmt(totalBayar), accent: "#68D391" }].map(item => (
-              <div key={item.label} style={{ background: "#141414", border: `1px solid ${item.big ? GOLD + "33" : "#2a2a2a"}`, borderRadius: 10, padding: item.big ? "28px 28px" : "20px 28px", flex: item.big ? "1.5" : "1" }}>
-                <div style={{ color: "#555", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>{item.label}</div>
-                <div style={{ color: item.accent, fontSize: item.big ? 32 : 22, fontWeight: 800, letterSpacing: "-0.02em" }}>{item.val}</div>
-                {item.big && <div style={{ color: "#444", fontSize: 12, marginTop: 6 }}>Estimasi, bukan penawaran resmi bank</div>}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── KONTAK SECTION ──────────────────────────────────────────────────────────
-function KontakSection() {
-  const [form, setForm] = useState({ nama: "", hp: "", pesan: "" });
-  const [sent, setSent] = useState(false);
-  const inp = { background: "#1a1a1a", border: "1px solid #333", borderRadius: 6, padding: "12px 16px", color: "#f5f5f5", fontSize: 14, outline: "none", width: "100%", boxSizing: "border-box" };
-
-  if (sent) return (
-    <section id="kontak-section" style={{ background: "#0d0d0d", padding: "60px clamp(16px, 4vw, 48px)", textAlign: "center" }}>
-      <div style={{ fontSize: 56, marginBottom: 20 }}>✅</div>
-      <h2 style={{ color: "#f5f5f5", margin: "0 0 12px", fontSize: 28, fontWeight: 700 }}>Pesan Terkirim!</h2>
-      <p style={{ color: "#888", fontSize: 16 }}>Tim kami akan menghubungi Anda segera.</p>
-    </section>
-  );
-
-  return (
-    <section id="kontak-section" style={{ background: "#0d0d0d", padding: "60px clamp(16px, 4vw, 48px)" }}>
-      <div style={{ maxWidth: 700, margin: "0 auto" }}>
-        <div style={{ marginBottom: 40 }}>
-          <div style={{ color: GOLD, fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 600, marginBottom: 12 }}>— Hubungi Kami</div>
-          <h2 style={{ color: "#f5f5f5", fontSize: "clamp(28px, 4vw, 42px)", fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>Punya Pertanyaan?</h2>
-        </div>
-        <div style={{ background: "#141414", border: "1px solid #2a2a2a", borderRadius: 12, padding: 36, display: "flex", flexDirection: "column", gap: 16 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-            <div><label style={{ color: "#666", fontSize: 12, display: "block", marginBottom: 6 }}>Nama</label>
-              <input style={inp} value={form.nama} onChange={e => setForm(f => ({ ...f, nama: e.target.value }))} /></div>
-            <div><label style={{ color: "#666", fontSize: 12, display: "block", marginBottom: 6 }}>No. HP</label>
-              <input style={inp} value={form.hp} onChange={e => setForm(f => ({ ...f, hp: e.target.value }))} /></div>
-          </div>
-          <div><label style={{ color: "#666", fontSize: 12, display: "block", marginBottom: 6 }}>Pesan</label>
-            <textarea style={{ ...inp, resize: "vertical", minHeight: 80 }} value={form.pesan} onChange={e => setForm(f => ({ ...f, pesan: e.target.value }))} /></div>
-          <button onClick={() => { if (!form.nama || !form.hp) return alert("Nama dan HP wajib diisi"); setSent(true); }} style={{ width: "100%", padding: "15px", background: GOLD, color: "#0a0a0a", border: "none", borderRadius: 6, fontWeight: 800, fontSize: 15, cursor: "pointer", textTransform: "uppercase" }}>
-            Kirim Pesan →
-          </button>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Footer() {
   return (
     <footer style={{ background: "#080808", borderTop: "1px solid #1a1a1a", padding: "48px 48px 32px" }}>
@@ -629,7 +540,7 @@ function Footer() {
             </div>
             <p style={{ color: "#555", fontSize: 13, lineHeight: 1.7, maxWidth: 280 }}>Dealer mobil bekas terpercaya dengan inspeksi 150+ titik dan jaminan transparansi penuh.</p>
           </div>
-          {[["Layanan", ["Beli & Kirim ke Rumah", "Laporan Inspeksi Digital", "Simulasi Kredit", "Ajukan Leasing"]], ["Kontak", ["📍 Jl. Contoh No. 123, Jakarta", "📞 021-1234-5678", "💬 0812-3456-7890"]]].map(([title, items]) => (
+          {[["Layanan", ["Beli & Kirim ke Rumah", "Laporan Inspeksi Digital", "Estimasi Cicilan", "Ajukan Leasing"]], ["Kontak", ["📍 Jl. Contoh No. 123, Jakarta", "💬 0811-6707-099"]]].map(([title, items]) => (
             <div key={title}>
               <div style={{ color: GOLD, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>{title}</div>
               {items.map(item => <div key={item} style={{ color: "#666", fontSize: 13, marginBottom: 8, lineHeight: 1.5 }}>{item}</div>)}
@@ -660,7 +571,7 @@ export default function ZahraMobilGuest() {
   };
 
   return (
-    <div style={{ background: "#0a0a0a", minHeight: "100vh", fontFamily: "'Inter', system-ui, sans-serif", color: "#f5f5f5", overflowX: "hidden", width: "100%", maxWidth: "100vw", boxSizing: "border-box" }}>
+    <div style={{ background: "#0a0a0a", minHeight: "100vh", fontFamily: "'Poppins', 'Inter', system-ui, sans-serif", color: "#f5f5f5", overflowX: "hidden", width: "100%", maxWidth: "100vw", boxSizing: "border-box" }}>
       <style>{`
         * { box-sizing: border-box; }
         html, body { overflow-x: hidden; max-width: 100vw; }
@@ -682,8 +593,6 @@ export default function ZahraMobilGuest() {
         <>
           <HeroSlider cars={cars} onSelectCar={viewDetail} />
           <CatalogSection cars={cars} onView={viewDetail} />
-          <KreditSection />
-          <KontakSection />
           <Footer />
         </>
       ) : (
@@ -692,7 +601,12 @@ export default function ZahraMobilGuest() {
           <Footer />
         </>
       )}
-      <a href="https://wa.me/6281234567890" target="_blank" rel="noreferrer" style={{ position: "fixed", bottom: 28, right: 28, zIndex: 999, width: 56, height: 56, background: "#25D366", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 20px rgba(37,211,102,0.4)", textDecoration: "none", fontSize: 26 }}>💬</a>
+      <a href="https://wa.me/628116707099" target="_blank" rel="noreferrer" aria-label="Hubungi via WhatsApp" style={{ position: "fixed", bottom: 28, right: 28, zIndex: 999, width: 54, height: 54, background: "#161616", border: `1px solid ${SILVER}55`, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 24px rgba(0,0,0,0.5)", textDecoration: "none", transition: "border-color 0.2s" }}>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.07L2 22l5.07-1.33A9.96 9.96 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.6 0-3.1-.43-4.4-1.18l-.32-.19-3.26.85.87-3.18-.21-.33A7.96 7.96 0 014 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z" fill={SILVER}/>
+          <path d="M16.5 13.3c-.25-.13-1.47-.72-1.7-.8-.23-.08-.4-.13-.56.13-.17.25-.65.8-.8.97-.15.17-.3.18-.55.06-.25-.13-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.38.11-.51.13-.13.29-.32.43-.49.14-.17.19-.3.29-.48.1-.18.05-.34-.02-.48-.07-.13-.6-1.46-.83-2-.22-.53-.45-.46-.62-.47-.16-.01-.34-.01-.53-.01-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.28 0 1.35.97 2.65 1.1 2.83.14.18 1.86 2.84 4.51 3.87 2.65 1.03 2.65.69 3.12.65.47-.04 1.47-.6 1.68-1.18.2-.58.2-1.08.14-1.18-.06-.1-.23-.16-.48-.29z" fill={SILVER}/>
+        </svg>
+      </a>
     </div>
   );
 }
