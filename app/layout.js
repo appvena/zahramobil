@@ -1,6 +1,12 @@
 export const metadata = {
   title: "Zahra Mobil — Showroom Mobil Bekas Terpercaya",
-  description: "Dealer mobil bekas dengan inspeksi 150+ titik dan jaminan transparansi penuh. Beli mobil online, kirim langsung ke rumah Anda.",
+  description: "Dealer mobil bekas dengan inspeksi 15+ titik dan jaminan transparansi penuh. Beli mobil online, kirim langsung ke rumah Anda.",
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0a0a0a",
 };
 
 export default function RootLayout({ children }) {
