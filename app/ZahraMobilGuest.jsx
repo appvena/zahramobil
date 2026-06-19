@@ -1,5 +1,7 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
+import { db } from "./firebase";
+import { collection, onSnapshot, addDoc, serverTimestamp } from "firebase/firestore";
 
 // ─── MOCK DATA ───────────────────────────────────────────────────────────────
 const INSPECTION_CATEGORIES = [
@@ -27,18 +29,6 @@ function genInspection(seed) {
   });
   return out;
 }
-
-const CARS = [
-  { id: "c1", brand: "Toyota", model: "Fortuner GR Sport", type: "SUV", price: 620000000, year: 2024, km: 8200, status: "Ready", showInHero: true, heroStyle: "fullbleed", color: "Hitam Metalik", transmission: "Otomatis", fuel: "Diesel", noRangka: "MHFXX1234K567890", noMesin: "2GD-FTV-88321", images: ["https://images.unsplash.com/photo-1619767886558-efdc259cde1a?w=1400&q=80","https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900&q=80","https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900&q=80&sat=-100"], desc: "Dominasi setiap medan dengan mesin diesel bertenaga dan desain GR Sport eksklusif.", inspection: genInspection(1) },
-  { id: "c2", brand: "Honda", model: "CR-V Sensing", type: "SUV", price: 545000000, year: 2024, km: 5100, status: "Ready", showInHero: true, heroStyle: "fullbleed", color: "Putih Platinum", transmission: "Otomatis", fuel: "Bensin", noRangka: "MHRXX5678K112233", noMesin: "K20C-44910", images: ["https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=1400&q=80","https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=900&q=80"], desc: "Teknologi Honda Sensing terdepan untuk pengalaman berkendara yang aman dan cerdas.", inspection: genInspection(2) },
-  { id: "c3", brand: "Mitsubishi", model: "Pajero Sport Dakar", type: "SUV", price: 710000000, year: 2023, km: 8500, status: "Ready", showInHero: true, heroStyle: "fullbleed", color: "Silver Chrome", transmission: "Otomatis", fuel: "Diesel", noRangka: "MMCXX9988K445566", noMesin: "4N15-77654", images: ["https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1400&q=80","https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=900&q=80"], desc: "Legenda off-road sejati. Badan kokoh, interior mewah, siap untuk semua tantangan.", inspection: genInspection(3) },
-  { id: "c4", brand: "Mazda", model: "CX-5 Elite", type: "SUV", price: 490000000, year: 2024, km: 3200, status: "Booking", showInHero: false, color: "Soul Red Crystal", transmission: "Otomatis", fuel: "Bensin", noRangka: "JMZXX3344K778899", noMesin: "PY-VPS-22156", images: ["https://images.unsplash.com/photo-1555215695-3004980ad54e?w=1400&q=80"], desc: "Desain Kodo yang memukau bertemu dengan teknologi i-Activ AWD.", inspection: genInspection(4) },
-  { id: "c5", brand: "Suzuki", model: "Ertiga Hybrid", type: "MPV", price: 265000000, year: 2024, km: 4400, status: "Ready", showInHero: false, color: "Putih Pearl", transmission: "Otomatis", fuel: "Hybrid", noRangka: "MHKXX2211K990011", noMesin: "K15B-30982", images: ["https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?w=900&q=80"], desc: "Efisiensi bahan bakar terbaik di kelasnya dengan teknologi mild hybrid.", inspection: genInspection(5) },
-  { id: "c6", brand: "Toyota", model: "Alphard Executive", type: "MPV", price: 1250000000, year: 2023, km: 12000, status: "Ready", showInHero: false, color: "Pearl White", transmission: "Otomatis", fuel: "Hybrid", noRangka: "MHFXX7766K223344", noMesin: "2AR-FXE-19887", images: ["https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=900&q=80"], desc: "Kemewahan tanpa kompromi. Kabin executive dengan sistem hybrid terdepan.", inspection: genInspection(6) },
-];
-
-const BRANDS = ["Semua", ...new Set(CARS.map(c => c.brand))];
-const TYPES = ["Semua", ...new Set(CARS.map(c => c.type))];
 
 const fmt = (n) => new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0 }).format(n);
 const fmtShort = (n) => n >= 1e9 ? `${(n / 1e9).toFixed(2)} M` : `${(n / 1e6).toFixed(0)} Jt`;
@@ -87,9 +77,10 @@ function HeroSlider({ cars, onSelectCar }) {
   const next = useCallback(() => go((cur + 1) % heroCars.length), [go, cur, heroCars.length]);
 
   useEffect(() => {
+    if (heroCars.length === 0) return;
     timerRef.current = setInterval(next, 5500);
     return () => clearInterval(timerRef.current);
-  }, [next]);
+  }, [next, heroCars.length]);
 
   if (!heroCars || heroCars.length === 0) return null;
   const car = heroCars[cur];
@@ -218,6 +209,9 @@ function CatalogSection({ cars, onView }) {
   const [type, setType] = useState("Semua");
   const [maxPrice, setMaxPrice] = useState(2000);
   const [search, setSearch] = useState("");
+
+  const BRANDS = ["Semua", ...new Set(cars.map(c => c.brand))];
+  const TYPES = ["Semua", ...new Set(cars.map(c => c.type))];
 
   const filtered = cars.filter(c =>
     (brand === "Semua" || c.brand === brand) &&
@@ -363,10 +357,19 @@ function InstantCheckout({ car, onSubmit }) {
 
   const inp = { background: "#1a1a1a", border: "1px solid #333", borderRadius: 6, padding: "11px 14px", color: "#f5f5f5", fontSize: 14, outline: "none", width: "100%", boxSizing: "border-box" };
 
-  const handleSubmit = () => {
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async () => {
     if (!form.nama || !form.hp || !form.alamat) return alert("Nama, No. HP, dan Alamat wajib diisi.");
-    setSent(true);
-    onSubmit && onSubmit({ ...form, carId: car.id, carName: `${car.brand} ${car.model}` });
+    setSubmitting(true);
+    try {
+      await onSubmit({ ...form, carId: car.id, carName: `${car.brand} ${car.model}`, unit: `${car.brand} ${car.model}`, type: "Beli & Kirim ke Rumah" });
+      setSent(true);
+    } catch (e) {
+      // error sudah ditangani di handleCheckout induk
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (sent) return (
@@ -431,8 +434,8 @@ function InstantCheckout({ car, onSubmit }) {
           <span style={{ color: GOLD, fontWeight: 700, fontSize: 14 }}>{car.brand} {car.model}</span>
         </div>
 
-        <button onClick={handleSubmit} style={{ width: "100%", padding: "15px", background: GOLD, color: "#0a0a0a", border: "none", borderRadius: 6, fontWeight: 800, fontSize: 15, cursor: "pointer", letterSpacing: "0.04em", textTransform: "uppercase", marginTop: 6 }}>
-          Pesan Sekarang →
+        <button onClick={handleSubmit} disabled={submitting} style={{ width: "100%", padding: "15px", background: submitting ? "#555" : GOLD, color: "#0a0a0a", border: "none", borderRadius: 6, fontWeight: 800, fontSize: 15, cursor: submitting ? "default" : "pointer", letterSpacing: "0.04em", textTransform: "uppercase", marginTop: 6 }}>
+          {submitting ? "Mengirim..." : "Pesan Sekarang →"}
         </button>
         <p style={{ color: "#444", fontSize: 11, textAlign: "center", margin: 0 }}>Dengan memesan, Anda menyetujui untuk dihubungi tim Sales kami via WhatsApp/telepon.</p>
       </div>
@@ -547,14 +550,39 @@ function Footer() {
 export default function ZahraMobilGuest() {
   const [page, setPage] = useState("home");
   const [selectedCar, setSelectedCar] = useState(null);
-  const [cars] = useState(CARS);
+  const [cars, setCars] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsub = onSnapshot(collection(db, "cars"), (snapshot) => {
+      const data = snapshot.docs.map(doc => {
+        const d = doc.data();
+        return { id: doc.id, ...d, inspection: d.inspection || genInspection(1) };
+      });
+      setCars(data);
+      setLoading(false);
+    }, (error) => {
+      console.error("Gagal mengambil data mobil:", error);
+      setLoading(false);
+    });
+    return () => unsub();
+  }, []);
 
   const viewDetail = (car) => { setSelectedCar(car); setPage("detail"); window.scrollTo(0, 0); };
   const backHome = () => { setPage("home"); setTimeout(() => document.getElementById("katalog")?.scrollIntoView(), 50); };
   const goHome = () => { setPage("home"); window.scrollTo(0, 0); };
 
-  const handleCheckout = (data) => {
-    console.log("Pesanan baru masuk ke Firestore (orders):", data);
+  const handleCheckout = async (data) => {
+    try {
+      await addDoc(collection(db, "orders"), {
+        ...data,
+        stage: "Pesanan Baru",
+        createdAt: serverTimestamp(),
+      });
+    } catch (error) {
+      console.error("Gagal mengirim pesanan:", error);
+      alert("Maaf, pesanan gagal terkirim. Silakan coba lagi atau hubungi kami via WhatsApp.");
+    }
   };
 
   return (
@@ -576,7 +604,11 @@ export default function ZahraMobilGuest() {
         }
       `}</style>
       <Navbar onNav={goHome} />
-      {page === "home" ? (
+      {loading ? (
+        <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ color: SILVER, fontSize: 13, letterSpacing: "0.15em", textTransform: "uppercase" }}>Memuat...</div>
+        </div>
+      ) : page === "home" ? (
         <>
           <HeroSlider cars={cars} onSelectCar={viewDetail} />
           <CatalogSection cars={cars} onView={viewDetail} />
