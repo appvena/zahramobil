@@ -247,7 +247,7 @@ function CatalogSection({ cars, onView }) {
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 24 }}>
+        <div className="zm-grid-catalog" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 24 }}>
           {filtered.map(car => <CarCard key={car.id} car={car} onView={onView} />)}
           {filtered.length === 0 && (
             <div style={{ gridColumn: "1/-1", textAlign: "center", padding: "80px 0", color: "#444" }}>
@@ -289,7 +289,7 @@ function InspectionReport({ inspection }) {
             <div style={{ color: "#22c55e", fontSize: 28, fontWeight: 800 }}>{Math.round((totalOk / totalPoints) * 100)}%</div>
           </div>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
+        <div className="zm-grid-inspect" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
           {summary.map(cat => (
             <button key={cat.key} onClick={() => setOpenCat(cat.key)}
               style={{ background: openCat === cat.key ? `${statusColor[cat.worst]}15` : "#1a1a1a", border: `1.5px solid ${openCat === cat.key ? statusColor[cat.worst] : "#2a2a2a"}`, borderRadius: 10, padding: "16px 14px", cursor: "pointer", textAlign: "center", transition: "all 0.2s" }}>
@@ -479,7 +479,7 @@ function DetailPage({ car, onBack, onCheckoutSubmit }) {
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr", gap: 32, marginBottom: 40 }}>
+        <div className="zm-grid-detail" style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr", gap: 32, marginBottom: 40 }}>
           <div>
             <div style={{ display: "flex", gap: 8, marginBottom: 20, borderBottom: "1px solid #2a2a2a" }}>
               {[["galeri", "📷 Galeri Foto"], ["inspeksi", "🔍 Laporan Inspeksi"], ["spesifikasi", "📋 Spesifikasi"]].map(([key, label]) => (
@@ -549,7 +549,7 @@ function KreditSection() {
           <div style={{ color: GOLD, fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 600, marginBottom: 12 }}>— Perencanaan</div>
           <h2 style={{ color: "#f5f5f5", fontSize: "clamp(28px, 4vw, 46px)", fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>Simulasi Kredit</h2>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}>
+        <div className="zm-grid-2col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}>
           <div style={{ background: "#141414", border: "1px solid #2a2a2a", borderRadius: 12, padding: 36 }}>
             <SliderInput label="Harga Kendaraan" value={harga} min={100} max={2000} step={50} onChange={setHarga} display={fmtShort(harga * 1e6)} />
             <SliderInput label="Uang Muka (DP)" value={dp} min={10} max={60} step={5} onChange={setDp} display={`${dp}% — ${fmtShort((harga * 1e6) * dp / 100)}`} color="#5B9BD5" />
@@ -656,7 +656,23 @@ export default function ZahraMobilGuest() {
   };
 
   return (
-    <div style={{ background: "#0a0a0a", minHeight: "100vh", fontFamily: "'Inter', system-ui, sans-serif", color: "#f5f5f5" }}>
+    <div style={{ background: "#0a0a0a", minHeight: "100vh", fontFamily: "'Inter', system-ui, sans-serif", color: "#f5f5f5", overflowX: "hidden", width: "100%", maxWidth: "100vw", boxSizing: "border-box" }}>
+      <style>{`
+        * { box-sizing: border-box; }
+        html, body { overflow-x: hidden; max-width: 100vw; }
+        img { max-width: 100%; }
+        @media (max-width: 760px) {
+          .zm-grid-detail { grid-template-columns: 1fr !important; }
+          .zm-grid-2col { grid-template-columns: 1fr !important; }
+          .zm-grid-catalog { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 560px) {
+          .zm-grid-inspect { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (min-width: 561px) and (max-width: 760px) {
+          .zm-grid-catalog { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+      `}</style>
       <Navbar onNav={goHome} />
       {page === "home" ? (
         <>
