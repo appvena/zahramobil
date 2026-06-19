@@ -97,11 +97,15 @@ function HeroSlider({ cars, onSelectCar }) {
         <div key={`prev-${prev}`} style={{ position: "absolute", inset: 0, zIndex: 1, backgroundImage: `url(${prevCar.images[0]})`, backgroundSize: "cover", backgroundPosition: "center", animation: `heroBgOut${dir > 0 ? "Left" : "Right"} 0.9s cubic-bezier(.77,0,.18,1) forwards` }} />
       )}
       {prevCar && prevCar.heroStyle === "floating" && (
-        <img key={`previmg-${prev}`} src={prevCar.images[0]} alt="" style={{ position: "absolute", left: "50%", bottom: "5%", maxWidth: "min(85vw, 980px)", maxHeight: "42vh", width: "auto", height: "auto", transform: "translateX(-50%)", zIndex: 1, objectFit: "contain", animation: `heroBgOut${dir > 0 ? "Left" : "Right"} 0.9s cubic-bezier(.77,0,.18,1) forwards`, filter: "drop-shadow(0 30px 40px rgba(0,0,0,0.6))" }} />
+        <div key={`previmg-${prev}`} style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: "52vh", zIndex: 1, animation: `heroBgOut${dir > 0 ? "Left" : "Right"} 0.9s cubic-bezier(.77,0,.18,1) forwards`, display: "flex", alignItems: "flex-end", justifyContent: "center" }}>
+          <img src={prevCar.images[0]} alt="" style={{ maxWidth: "92%", maxHeight: "100%", width: "auto", height: "auto", objectFit: "contain", filter: "drop-shadow(0 30px 40px rgba(0,0,0,0.6))" }} />
+        </div>
       )}
 
       {car.heroStyle === "floating" ? (
-        <img key={`curimg-${cur}`} src={car.images[0]} alt={car.model} style={{ position: "absolute", left: "50%", bottom: "5%", maxWidth: "min(85vw, 980px)", maxHeight: "42vh", width: "auto", height: "auto", transform: "translateX(-50%)", zIndex: 2, objectFit: "contain", animation: animating ? `heroBgIn${dir > 0 ? "Right" : "Left"} 0.9s cubic-bezier(.77,0,.18,1) forwards` : "none", filter: "drop-shadow(0 30px 40px rgba(0,0,0,0.6))" }} />
+        <div key={`curimg-${cur}`} style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: "52vh", zIndex: 2, animation: animating ? `heroBgIn${dir > 0 ? "Right" : "Left"} 0.9s cubic-bezier(.77,0,.18,1) forwards` : "none", display: "flex", alignItems: "flex-end", justifyContent: "center" }}>
+          <img src={car.images[0]} alt={car.model} style={{ maxWidth: "92%", maxHeight: "100%", width: "auto", height: "auto", objectFit: "contain", filter: "drop-shadow(0 30px 40px rgba(0,0,0,0.6))" }} />
+        </div>
       ) : (
         <div key={`cur-${cur}`} style={{ position: "absolute", inset: 0, zIndex: 2, backgroundImage: `url(${car.images[0]})`, backgroundSize: "cover", backgroundPosition: "center", animation: animating ? `heroBgIn${dir > 0 ? "Right" : "Left"} 0.9s cubic-bezier(.77,0,.18,1) forwards` : "none" }} />
       )}
