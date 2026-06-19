@@ -97,11 +97,11 @@ function HeroSlider({ cars, onSelectCar }) {
         <div key={`prev-${prev}`} style={{ position: "absolute", inset: 0, zIndex: 1, backgroundImage: `url(${prevCar.images[0]})`, backgroundSize: "cover", backgroundPosition: "center", animation: `heroBgOut${dir > 0 ? "Left" : "Right"} 0.9s cubic-bezier(.77,0,.18,1) forwards` }} />
       )}
       {prevCar && prevCar.heroStyle === "floating" && (
-        <img key={`previmg-${prev}`} src={prevCar.images[0]} alt="" style={{ position: "absolute", left: "50%", bottom: "8%", width: "min(78%, 980px)", transform: "translateX(-50%)", zIndex: 1, objectFit: "contain", animation: `heroBgOut${dir > 0 ? "Left" : "Right"} 0.9s cubic-bezier(.77,0,.18,1) forwards`, filter: "drop-shadow(0 40px 60px rgba(0,0,0,0.6))" }} />
+        <img key={`previmg-${prev}`} src={prevCar.images[0]} alt="" style={{ position: "absolute", left: "50%", bottom: "5%", maxWidth: "min(85vw, 980px)", maxHeight: "42vh", width: "auto", height: "auto", transform: "translateX(-50%)", zIndex: 1, objectFit: "contain", animation: `heroBgOut${dir > 0 ? "Left" : "Right"} 0.9s cubic-bezier(.77,0,.18,1) forwards`, filter: "drop-shadow(0 30px 40px rgba(0,0,0,0.6))" }} />
       )}
 
       {car.heroStyle === "floating" ? (
-        <img key={`curimg-${cur}`} src={car.images[0]} alt={car.model} style={{ position: "absolute", left: "50%", bottom: "8%", width: "min(78%, 980px)", transform: "translateX(-50%)", zIndex: 2, objectFit: "contain", animation: animating ? `heroBgIn${dir > 0 ? "Right" : "Left"} 0.9s cubic-bezier(.77,0,.18,1) forwards` : "none", filter: "drop-shadow(0 40px 60px rgba(0,0,0,0.6))" }} />
+        <img key={`curimg-${cur}`} src={car.images[0]} alt={car.model} style={{ position: "absolute", left: "50%", bottom: "5%", maxWidth: "min(85vw, 980px)", maxHeight: "42vh", width: "auto", height: "auto", transform: "translateX(-50%)", zIndex: 2, objectFit: "contain", animation: animating ? `heroBgIn${dir > 0 ? "Right" : "Left"} 0.9s cubic-bezier(.77,0,.18,1) forwards` : "none", filter: "drop-shadow(0 30px 40px rgba(0,0,0,0.6))" }} />
       ) : (
         <div key={`cur-${cur}`} style={{ position: "absolute", inset: 0, zIndex: 2, backgroundImage: `url(${car.images[0]})`, backgroundSize: "cover", backgroundPosition: "center", animation: animating ? `heroBgIn${dir > 0 ? "Right" : "Left"} 0.9s cubic-bezier(.77,0,.18,1) forwards` : "none" }} />
       )}
@@ -116,15 +116,15 @@ function HeroSlider({ cars, onSelectCar }) {
         <div style={{ position: "absolute", inset: 0, zIndex: 3, background: "radial-gradient(ellipse at 50% 100%, rgba(0,0,0,0.5) 0%, transparent 60%)" }} />
       )}
 
-      <div style={{ position: "absolute", inset: 0, zIndex: 5, display: "flex", flexDirection: "column", justifyContent: car.heroStyle === "floating" ? "flex-start" : "center", padding: car.heroStyle === "floating" ? "120px clamp(16px, 4vw, 48px) 0" : "0 clamp(16px, 4vw, 48px) 80px", boxSizing: "border-box" }}>
+      <div style={{ position: "absolute", inset: 0, zIndex: 5, display: "flex", flexDirection: "column", justifyContent: car.heroStyle === "floating" ? "flex-start" : "center", padding: car.heroStyle === "floating" ? "clamp(90px, 18vh, 130px) clamp(16px, 4vw, 48px) 0" : "0 clamp(16px, 4vw, 48px) 80px", boxSizing: "border-box" }}>
         <div key={`txt-${cur}`} style={{ maxWidth: 620, animation: "heroTextIn 0.8s cubic-bezier(.25,.8,.25,1) both", animationDelay: "0.15s", textAlign: car.heroStyle === "floating" ? "center" : "left", margin: car.heroStyle === "floating" ? "0 auto" : "0" }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: car.heroStyle === "floating" ? "center" : "flex-start", gap: 12, marginBottom: 20 }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: car.heroStyle === "floating" ? "center" : "flex-start", gap: 12, marginBottom: car.heroStyle === "floating" ? 12 : 20 }}>
             <div style={{ width: 32, height: 2, background: GOLD }} />
             <span style={{ color: GOLD, fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 600 }}>{car.brand} — {car.type}</span>
           </div>
-          <h1 style={{ color: "#fff", fontSize: "clamp(36px, 5vw, 68px)", fontWeight: 800, lineHeight: 1.05, margin: "0 0 16px", letterSpacing: "-0.02em" }}>{car.model}</h1>
+          <h1 style={{ color: "#fff", fontSize: car.heroStyle === "floating" ? "clamp(28px, 4.5vw, 56px)" : "clamp(36px, 5vw, 68px)", fontWeight: 800, lineHeight: 1.05, margin: car.heroStyle === "floating" ? "0 0 10px" : "0 0 16px", letterSpacing: "-0.02em" }}>{car.model}</h1>
           {car.heroStyle !== "floating" && <p style={{ color: "rgba(255,255,255,0.7)", fontSize: 16, lineHeight: 1.7, margin: "0 0 12px", maxWidth: 480 }}>{car.desc}</p>}
-          <div style={{ color: GOLD, fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 700, letterSpacing: "-0.01em", margin: "0 0 32px" }}>{fmt(car.price)}</div>
+          <div style={{ color: GOLD, fontSize: car.heroStyle === "floating" ? "clamp(18px, 2.5vw, 28px)" : "clamp(22px, 3vw, 32px)", fontWeight: 700, letterSpacing: "-0.01em", margin: car.heroStyle === "floating" ? "0 0 18px" : "0 0 32px" }}>{fmt(car.price)}</div>
           <div style={{ display: "flex", gap: 14, justifyContent: car.heroStyle === "floating" ? "center" : "flex-start" }}>
             <button onClick={() => onSelectCar(car)} style={{ padding: "14px 32px", background: GOLD, color: "#0a0a0a", border: "none", borderRadius: 4, fontWeight: 700, fontSize: 14, cursor: "pointer", letterSpacing: "0.05em", textTransform: "uppercase" }}>
               Lihat Detail & Rapor
