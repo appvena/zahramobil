@@ -29,9 +29,9 @@ function genInspection(seed) {
 }
 
 const CARS = [
-  { id: "c1", brand: "Toyota", model: "Fortuner GR Sport", type: "SUV", price: 620000000, year: 2024, km: 8200, status: "Ready", showInHero: true, heroStyle: "floating", color: "Hitam Metalik", transmission: "Otomatis", fuel: "Diesel", noRangka: "MHFXX1234K567890", noMesin: "2GD-FTV-88321", images: ["https://images.unsplash.com/photo-1619767886558-efdc259cde1a?w=1400&q=80","https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900&q=80","https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900&q=80&sat=-100"], desc: "Dominasi setiap medan dengan mesin diesel bertenaga dan desain GR Sport eksklusif.", inspection: genInspection(1) },
+  { id: "c1", brand: "Toyota", model: "Fortuner GR Sport", type: "SUV", price: 620000000, year: 2024, km: 8200, status: "Ready", showInHero: true, heroStyle: "fullbleed", color: "Hitam Metalik", transmission: "Otomatis", fuel: "Diesel", noRangka: "MHFXX1234K567890", noMesin: "2GD-FTV-88321", images: ["https://images.unsplash.com/photo-1619767886558-efdc259cde1a?w=1400&q=80","https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900&q=80","https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900&q=80&sat=-100"], desc: "Dominasi setiap medan dengan mesin diesel bertenaga dan desain GR Sport eksklusif.", inspection: genInspection(1) },
   { id: "c2", brand: "Honda", model: "CR-V Sensing", type: "SUV", price: 545000000, year: 2024, km: 5100, status: "Ready", showInHero: true, heroStyle: "fullbleed", color: "Putih Platinum", transmission: "Otomatis", fuel: "Bensin", noRangka: "MHRXX5678K112233", noMesin: "K20C-44910", images: ["https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=1400&q=80","https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=900&q=80"], desc: "Teknologi Honda Sensing terdepan untuk pengalaman berkendara yang aman dan cerdas.", inspection: genInspection(2) },
-  { id: "c3", brand: "Mitsubishi", model: "Pajero Sport Dakar", type: "SUV", price: 710000000, year: 2023, km: 8500, status: "Ready", showInHero: true, heroStyle: "floating", color: "Silver Chrome", transmission: "Otomatis", fuel: "Diesel", noRangka: "MMCXX9988K445566", noMesin: "4N15-77654", images: ["https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1400&q=80","https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=900&q=80"], desc: "Legenda off-road sejati. Badan kokoh, interior mewah, siap untuk semua tantangan.", inspection: genInspection(3) },
+  { id: "c3", brand: "Mitsubishi", model: "Pajero Sport Dakar", type: "SUV", price: 710000000, year: 2023, km: 8500, status: "Ready", showInHero: true, heroStyle: "fullbleed", color: "Silver Chrome", transmission: "Otomatis", fuel: "Diesel", noRangka: "MMCXX9988K445566", noMesin: "4N15-77654", images: ["https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1400&q=80","https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=900&q=80"], desc: "Legenda off-road sejati. Badan kokoh, interior mewah, siap untuk semua tantangan.", inspection: genInspection(3) },
   { id: "c4", brand: "Mazda", model: "CX-5 Elite", type: "SUV", price: 490000000, year: 2024, km: 3200, status: "Booking", showInHero: false, color: "Soul Red Crystal", transmission: "Otomatis", fuel: "Bensin", noRangka: "JMZXX3344K778899", noMesin: "PY-VPS-22156", images: ["https://images.unsplash.com/photo-1555215695-3004980ad54e?w=1400&q=80"], desc: "Desain Kodo yang memukau bertemu dengan teknologi i-Activ AWD.", inspection: genInspection(4) },
   { id: "c5", brand: "Suzuki", model: "Ertiga Hybrid", type: "MPV", price: 265000000, year: 2024, km: 4400, status: "Ready", showInHero: false, color: "Putih Pearl", transmission: "Otomatis", fuel: "Hybrid", noRangka: "MHKXX2211K990011", noMesin: "K15B-30982", images: ["https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?w=900&q=80"], desc: "Efisiensi bahan bakar terbaik di kelasnya dengan teknologi mild hybrid.", inspection: genInspection(5) },
   { id: "c6", brand: "Toyota", model: "Alphard Executive", type: "MPV", price: 1250000000, year: 2023, km: 12000, status: "Ready", showInHero: false, color: "Pearl White", transmission: "Otomatis", fuel: "Hybrid", noRangka: "MHFXX7766K223344", noMesin: "2AR-FXE-19887", images: ["https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=900&q=80"], desc: "Kemewahan tanpa kompromi. Kabin executive dengan sistem hybrid terdepan.", inspection: genInspection(6) },
@@ -422,7 +422,7 @@ function InstantCheckout({ car, onSubmit }) {
 
         {form.metode === "Ajukan Kredit" && (
           <div style={{ background: "#0d0d0d", border: "1px solid #2a2a2a", borderRadius: 8, padding: 14, color: "#777", fontSize: 12.5, lineHeight: 1.6 }}>
-            💡 Tim Sales akan membantu proses pengajuan ke partner leasing (Adira, BCA Finance, Mandiri Tunas) setelah data terverifikasi. Lihat estimasi cicilan di samping.
+            💡 Tim Sales akan membantu proses pengajuan ke partner leasing (Adira, BCA Finance, Mandiri Tunas) setelah data terverifikasi. Hubungi kami via WhatsApp untuk simulasi cicilan.
           </div>
         )}
 
@@ -441,29 +441,16 @@ function InstantCheckout({ car, onSubmit }) {
 }
 
 // ─── MINI KREDIT (inline di detail) ───────────────────────────────────────────
-function MiniKredit({ price }) {
-  const [dp, setDp] = useState(20);
-  const [tenor, setTenor] = useState(48);
-  const bunga = 6;
-  const pokok = price * (1 - dp / 100);
-  const bungaBulan = bunga / 100 / 12;
-  const cicilan = pokok * bungaBulan / (1 - Math.pow(1 + bungaBulan, -tenor));
-
+function MiniKredit({ price, carName }) {
+  const waLink = `https://wa.me/628116707099?text=${encodeURIComponent(`Halo, saya tertarik dengan ${carName} (${fmt(price)}). Bisa minta info lebih lanjut?`)}`;
   return (
     <div style={{ background: "#141414", border: "1px solid #2a2a2a", borderRadius: 12, padding: 24 }}>
-      <div style={{ color: "#888", fontSize: 12, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 18 }}>Estimasi Cicilan</div>
-      <div style={{ marginBottom: 16 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}><span style={{ color: "#888", fontSize: 13 }}>DP</span><span style={{ color: GOLD, fontWeight: 700 }}>{dp}%</span></div>
-        <input type="range" min={10} max={60} step={5} value={dp} onChange={e => setDp(Number(e.target.value))} style={{ width: "100%", accentColor: GOLD }} />
-      </div>
-      <div style={{ marginBottom: 20 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}><span style={{ color: "#888", fontSize: 13 }}>Tenor</span><span style={{ color: "#68D391", fontWeight: 700 }}>{tenor} bulan</span></div>
-        <input type="range" min={12} max={60} step={12} value={tenor} onChange={e => setTenor(Number(e.target.value))} style={{ width: "100%", accentColor: "#68D391" }} />
-      </div>
-      <div style={{ borderTop: "1px solid #2a2a2a", paddingTop: 16 }}>
-        <div style={{ color: "#555", fontSize: 11, textTransform: "uppercase", marginBottom: 4 }}>Cicilan / bulan</div>
-        <div style={{ color: GOLD, fontSize: 24, fontWeight: 800 }}>{fmt(cicilan)}</div>
-      </div>
+      <div style={{ color: "#888", fontSize: 12, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Tanya Harga & Cicilan</div>
+      <p style={{ color: "#999", fontSize: 13, lineHeight: 1.6, margin: "0 0 18px" }}>Tim sales kami siap membantu hitungkan simulasi cicilan sesuai DP dan tenor yang Anda inginkan.</p>
+      <a href={waLink} target="_blank" rel="noreferrer" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, width: "100%", padding: "13px", background: "transparent", border: `1px solid ${SILVER}`, borderRadius: 4, color: "#fff", fontSize: 12, fontWeight: 400, letterSpacing: "0.1em", textTransform: "uppercase", textDecoration: "none", boxSizing: "border-box" }}>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.07L2 22l5.07-1.33A9.96 9.96 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.6 0-3.1-.43-4.4-1.18l-.32-.19-3.26.85.87-3.18-.21-.33A7.96 7.96 0 014 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z" fill={SILVER}/><path d="M16.5 13.3c-.25-.13-1.47-.72-1.7-.8-.23-.08-.4-.13-.56.13-.17.25-.65.8-.8.97-.15.17-.3.18-.55.06-.25-.13-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.38.11-.51.13-.13.29-.32.43-.49.14-.17.19-.3.29-.48.1-.18.05-.34-.02-.48-.07-.13-.6-1.46-.83-2-.22-.53-.45-.46-.62-.47-.16-.01-.34-.01-.53-.01-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.28 0 1.35.97 2.65 1.1 2.83.14.18 1.86 2.84 4.51 3.87 2.65 1.03 2.65.69 3.12.65.47-.04 1.47-.6 1.68-1.18.2-.58.2-1.08.14-1.18-.06-.1-.23-.16-.48-.29z" fill={SILVER}/></svg>
+        Hubungi via WhatsApp
+      </a>
     </div>
   );
 }
@@ -512,7 +499,7 @@ function DetailPage({ car, onBack, onCheckoutSubmit }) {
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-            <MiniKredit price={car.price} />
+            <MiniKredit price={car.price} carName={`${car.brand} ${car.model}`} />
             {car.status !== "Terjual" ? (
               <InstantCheckout car={car} onSubmit={onCheckoutSubmit} />
             ) : (
@@ -540,7 +527,7 @@ function Footer() {
             </div>
             <p style={{ color: "#555", fontSize: 13, lineHeight: 1.7, maxWidth: 280 }}>Dealer mobil bekas terpercaya dengan inspeksi 150+ titik dan jaminan transparansi penuh.</p>
           </div>
-          {[["Layanan", ["Beli & Kirim ke Rumah", "Laporan Inspeksi Digital", "Estimasi Cicilan", "Ajukan Leasing"]], ["Kontak", ["📍 Jl. Contoh No. 123, Jakarta", "💬 0811-6707-099"]]].map(([title, items]) => (
+          {[["Layanan", ["Beli & Kirim ke Rumah", "Laporan Inspeksi Digital", "Konsultasi via WhatsApp", "Ajukan Leasing"]], ["Kontak", ["📍 Jl. Dr. Mr. Mohd Hasan, Batoh, Kec. Lueng Bata, Kota Banda Aceh", "💬 0811-6707-099"]]].map(([title, items]) => (
             <div key={title}>
               <div style={{ color: GOLD, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>{title}</div>
               {items.map(item => <div key={item} style={{ color: "#666", fontSize: 13, marginBottom: 8, lineHeight: 1.5 }}>{item}</div>)}
