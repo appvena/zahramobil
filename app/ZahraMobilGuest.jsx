@@ -51,8 +51,8 @@ function Navbar({ onNav }) {
   return (
     <nav style={{ position: "absolute", top: 0, left: 0, right: 0, zIndex: 50, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px clamp(16px, 4vw, 48px)", boxSizing: "border-box", maxWidth: "100vw" }}>
       <button onClick={() => onNav("home")} style={{ display: "flex", alignItems: "center", gap: 10, background: "none", border: "none", cursor: "pointer", flexShrink: 0 }}>
-        <img src="/zahramobil/logo.png" alt="Zahra Mobil" style={{ height: 36, width: "auto", flexShrink: 0, objectFit: "contain" }} />
-        <span style={{ color: "#fff", fontWeight: 700, fontSize: "clamp(13px, 3vw, 20px)", letterSpacing: "0.02em", whiteSpace: "nowrap" }}>ZAHRA <span style={{ color: GOLD }}>MOBIL</span></span>
+        <img src="/zahramobil/logo.png" alt="Zahra Mobil" style={{ height: "clamp(44px, 8vw, 56px)", width: "auto", flexShrink: 0, objectFit: "contain" }} />
+        <span style={{ color: "#fff", fontWeight: 700, fontSize: "clamp(16px, 4vw, 24px)", letterSpacing: "0.02em", whiteSpace: "nowrap" }}>ZAHRA <span style={{ color: GOLD }}>MOBIL</span></span>
       </button>
       <div style={{ display: "flex", gap: "clamp(8px, 2vw, 36px)", flexShrink: 1, overflow: "hidden" }}>
         {[["Katalog", "katalog"]].map(([label, id]) => (
