@@ -516,7 +516,7 @@ function DetailPage({ car, onBack, onCheckoutSubmit }) {
                 {[["Merek", car.brand], ["Model", car.model], ["Tipe Bodi", car.type], ["Tahun", car.year], ["Kilometer", `${car.km.toLocaleString("id-ID")} km`], ["Warna", car.color], ["Transmisi", car.transmission], ["Bahan Bakar", car.fuel], ["No. Rangka", car.noRangka], ["No. Mesin", car.noMesin]].map(([label, val], i) => (
                   <div key={label} style={{ display: "flex", justifyContent: "space-between", padding: "13px 0", borderBottom: i < 9 ? "1px solid #2a2a2a" : "none" }}>
                     <span style={{ color: "#777", fontSize: 13.5 }}>{label}</span>
-                    <span style={{ color: "#e5e5e5", fontSize: 13.5, fontWeight: 600 }}>{val}</span>
+                    <span style={{ color: "#e5e5e5", fontSize: 13.5, fontWeight: 600, textTransform: "uppercase" }}>{val}</span>
                   </div>
                 ))}
               </div>
