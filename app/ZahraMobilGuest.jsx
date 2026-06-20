@@ -35,6 +35,8 @@ const fmtShort = (n) => n >= 1e9 ? `${(n / 1e9).toFixed(2)} M` : `${(n / 1e6).to
 
 const SILVER = "#C8CDD2";
 const GOLD = SILVER; // alias dipertahankan agar seluruh kode lama tetap konsisten memakai warna baru
+const CLOUDINARY_CLOUD_NAME = "dtpow34rz";
+const CLOUDINARY_UPLOAD_PRESET = "zahramobil_unsigned";
 
 // ─── NAVBAR (shared) ─────────────────────────────────────────────────────────
 function Navbar({ onNav }) {
@@ -351,19 +353,39 @@ function Gallery({ images }) {
 
 // ─── INSTANT CHECKOUT ─────────────────────────────────────────────────────────
 function InstantCheckout({ car, onSubmit }) {
-  const [form, setForm] = useState({ nama: "", hp: "", email: "", alamat: "", ktp: null, metode: "Cash" });
+  const [form, setForm] = useState({ nama: "", hp: "", email: "", alamat: "", ktp: null, ktpFileName: "", metode: "Cash" });
   const [sent, setSent] = useState(false);
+  const [uploadingKtp, setUploadingKtp] = useState(false);
   const fileRef = useRef();
 
   const inp = { background: "#1a1a1a", border: "1px solid #333", borderRadius: 6, padding: "11px 14px", color: "#f5f5f5", fontSize: 14, outline: "none", width: "100%", boxSizing: "border-box" };
 
   const [submitting, setSubmitting] = useState(false);
 
+  const handleKtpUpload = async (file) => {
+    if (!file) return;
+    setUploadingKtp(true);
+    try {
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, { method: "POST", body: data });
+      const json = await res.json();
+      if (!json.secure_url) throw new Error(json.error?.message || "Upload gagal");
+      setForm(f => ({ ...f, ktp: json.secure_url, ktpFileName: file.name }));
+    } catch (e) {
+      alert(`Gagal mengunggah KTP: ${e.message}. Silakan coba lagi.`);
+    } finally {
+      setUploadingKtp(false);
+    }
+  };
+
   const handleSubmit = async () => {
     if (!form.nama || !form.hp || !form.alamat) return alert("Nama, No. HP, dan Alamat wajib diisi.");
     setSubmitting(true);
     try {
-      await onSubmit({ ...form, carId: car.id, carName: `${car.brand} ${car.model}`, unit: `${car.brand} ${car.model}`, type: "Beli & Kirim ke Rumah" });
+      const { ktpFileName, ...payload } = form;
+      await onSubmit({ ...payload, carId: car.id, carName: `${car.brand} ${car.model}`, unit: `${car.brand} ${car.model}`, type: "Beli & Kirim ke Rumah" });
       setSent(true);
     } catch (e) {
       // error sudah ditangani di handleCheckout induk
@@ -406,9 +428,9 @@ function InstantCheckout({ car, onSubmit }) {
 
         <div>
           <label style={{ color: "#666", fontSize: 12, display: "block", marginBottom: 6 }}>Unggah Foto KTP</label>
-          <input ref={fileRef} type="file" accept="image/*" style={{ display: "none" }} onChange={e => setForm(f => ({ ...f, ktp: e.target.files[0]?.name }))} />
-          <button onClick={() => fileRef.current.click()} style={{ width: "100%", padding: "12px", background: "#1a1a1a", border: `1.5px dashed ${form.ktp ? GOLD : "#333"}`, borderRadius: 6, color: form.ktp ? GOLD : "#666", fontSize: 13, cursor: "pointer" }}>
-            {form.ktp ? `✓ ${form.ktp}` : "📷 Klik untuk unggah foto KTP"}
+          <input ref={fileRef} type="file" accept="image/*" style={{ display: "none" }} onChange={e => handleKtpUpload(e.target.files[0])} />
+          <button onClick={() => fileRef.current.click()} disabled={uploadingKtp} style={{ width: "100%", padding: "12px", background: "#1a1a1a", border: `1.5px dashed ${form.ktp ? GOLD : "#333"}`, borderRadius: 6, color: form.ktp ? GOLD : "#666", fontSize: 13, cursor: uploadingKtp ? "default" : "pointer" }}>
+            {uploadingKtp ? "⏳ Mengunggah..." : form.ktp ? `✓ ${form.ktpFileName}` : "📷 Klik untuk unggah foto KTP"}
           </button>
         </div>
 
@@ -434,8 +456,8 @@ function InstantCheckout({ car, onSubmit }) {
           <span style={{ color: GOLD, fontWeight: 700, fontSize: 14 }}>{car.brand} {car.model}</span>
         </div>
 
-        <button onClick={handleSubmit} disabled={submitting} style={{ width: "100%", padding: "15px", background: submitting ? "#555" : GOLD, color: "#0a0a0a", border: "none", borderRadius: 6, fontWeight: 800, fontSize: 15, cursor: submitting ? "default" : "pointer", letterSpacing: "0.04em", textTransform: "uppercase", marginTop: 6 }}>
-          {submitting ? "Mengirim..." : "Pesan Sekarang →"}
+        <button onClick={handleSubmit} disabled={submitting || uploadingKtp} style={{ width: "100%", padding: "15px", background: (submitting || uploadingKtp) ? "#555" : GOLD, color: "#0a0a0a", border: "none", borderRadius: 6, fontWeight: 800, fontSize: 15, cursor: (submitting || uploadingKtp) ? "default" : "pointer", letterSpacing: "0.04em", textTransform: "uppercase", marginTop: 6 }}>
+          {submitting ? "Mengirim..." : uploadingKtp ? "Tunggu unggah KTP..." : "Pesan Sekarang →"}
         </button>
         <p style={{ color: "#444", fontSize: 11, textAlign: "center", margin: 0 }}>Dengan memesan, Anda menyetujui untuk dihubungi tim Sales kami via WhatsApp/telepon.</p>
       </div>
