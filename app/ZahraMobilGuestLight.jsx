@@ -49,19 +49,21 @@ function Navbar({ onNav, onToggleTheme }) {
     <nav style={{ position: "absolute", top: 0, left: 0, right: 0, zIndex: 50, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px clamp(16px, 4vw, 48px)", boxSizing: "border-box", maxWidth: "100vw" }}>
       <button onClick={() => onNav("home")} style={{ display: "flex", alignItems: "center", gap: 10, background: "none", border: "none", cursor: "pointer", flexShrink: 0 }}>
         <img src="/zahramobil/logo.png" alt="Zahra Mobil" style={{ height: "clamp(44px, 8vw, 56px)", width: "auto", flexShrink: 0, objectFit: "contain" }} />
-        <span style={{ color: "#2A2520", fontWeight: 700, fontSize: "clamp(16px, 4vw, 24px)", letterSpacing: "0.02em", whiteSpace: "nowrap" }}>ZAHRA <span style={{ color: GOLD }}>MOBIL</span></span>
+        <span style={{ color: "#fff", fontWeight: 700, fontSize: "clamp(16px, 4vw, 24px)", letterSpacing: "0.02em", whiteSpace: "nowrap", textShadow: "0 1px 6px rgba(0,0,0,0.4)" }}>ZAHRA <span style={{ color: GOLD }}>MOBIL</span></span>
       </button>
-      <div style={{ display: "flex", gap: "clamp(8px, 2vw, 28px)", flexShrink: 1, overflow: "hidden", alignItems: "center" }}>
-        {[["Katalog", "katalog"]].map(([label, id]) => (
-          <a key={id} href={`#${id}`} onClick={() => onNav("home")} style={{ color: "rgba(255,255,255,0.85)", textDecoration: "none", fontSize: "clamp(10px, 2.2vw, 14px)", letterSpacing: "0.08em", fontWeight: 400, textTransform: "uppercase", whiteSpace: "nowrap" }}>
-            {label}
+      <div style={{ display: "flex", gap: "clamp(8px, 2vw, 28px)", alignItems: "center" }}>
+        <div style={{ display: "flex", gap: "clamp(8px, 2vw, 28px)", flexShrink: 1, overflow: "hidden" }}>
+          {[["Katalog", "katalog"]].map(([label, id]) => (
+            <a key={id} href={`#${id}`} onClick={() => onNav("home")} style={{ color: "#fff", textDecoration: "none", fontSize: "clamp(10px, 2.2vw, 14px)", letterSpacing: "0.08em", fontWeight: 600, textTransform: "uppercase", whiteSpace: "nowrap", textShadow: "0 1px 6px rgba(0,0,0,0.4)" }}>
+              {label}
+            </a>
+          ))}
+          <a href="https://wa.me/628116707099" target="_blank" rel="noreferrer" style={{ color: "#fff", textDecoration: "none", fontSize: "clamp(10px, 2.2vw, 14px)", letterSpacing: "0.08em", fontWeight: 600, textTransform: "uppercase", whiteSpace: "nowrap", textShadow: "0 1px 6px rgba(0,0,0,0.4)" }}>
+            Kontak
           </a>
-        ))}
-        <a href="https://wa.me/628116707099" target="_blank" rel="noreferrer" style={{ color: "rgba(255,255,255,0.85)", textDecoration: "none", fontSize: "clamp(10px, 2.2vw, 14px)", letterSpacing: "0.08em", fontWeight: 400, textTransform: "uppercase", whiteSpace: "nowrap" }}>
-          Kontak
-        </a>
+        </div>
         {onToggleTheme && (
-          <button onClick={onToggleTheme} aria-label="Ganti ke mode gelap" style={{ width: 30, height: 30, borderRadius: "50%", border: "1.5px solid rgba(255,255,255,0.5)", background: "rgba(0,0,0,0.15)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, flexShrink: 0, padding: 0 }}>
+          <button onClick={onToggleTheme} aria-label="Ganti ke mode gelap" style={{ width: 30, height: 30, minWidth: 30, borderRadius: "50%", border: "1.5px solid rgba(255,255,255,0.5)", background: "rgba(0,0,0,0.15)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, flexShrink: 0, padding: 0 }}>
             🌙
           </button>
         )}
@@ -133,14 +135,14 @@ function HeroSlider({ cars, onSelectCar }) {
             <div style={{ width: 32, height: 2, background: GOLD }} />
             <span style={{ color: GOLD, fontSize: 11, letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 400 }}>{car.brand} — {car.type}</span>
           </div>
-          <h1 style={{ color: "#2A2520", fontSize: car.heroStyle === "floating" ? "clamp(28px, 4.5vw, 56px)" : "clamp(36px, 5vw, 68px)", fontWeight: 300, lineHeight: 1.08, margin: car.heroStyle === "floating" ? "0 0 10px" : "0 0 16px", letterSpacing: "0.01em" }}>{car.model}</h1>
-          {car.heroStyle !== "floating" && <p style={{ color: "rgba(255,255,255,0.7)", fontSize: 16, lineHeight: 1.7, margin: "0 0 12px", maxWidth: 480 }}>{car.desc}</p>}
-          <div style={{ color: GOLD, fontSize: car.heroStyle === "floating" ? "clamp(16px, 2.2vw, 24px)" : "clamp(18px, 2.5vw, 26px)", fontWeight: 300, letterSpacing: "0.03em", margin: car.heroStyle === "floating" ? "0 0 18px" : "0 0 32px" }}>{fmt(car.price)}</div>
+          <h1 style={{ color: "#fff", fontSize: car.heroStyle === "floating" ? "clamp(28px, 4.5vw, 56px)" : "clamp(36px, 5vw, 68px)", fontWeight: 300, lineHeight: 1.08, margin: car.heroStyle === "floating" ? "0 0 10px" : "0 0 16px", letterSpacing: "0.01em", textShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>{car.model}</h1>
+          {car.heroStyle !== "floating" && <p style={{ color: "rgba(255,255,255,0.85)", fontSize: 16, lineHeight: 1.7, margin: "0 0 12px", maxWidth: 480, textShadow: "0 1px 8px rgba(0,0,0,0.4)" }}>{car.desc}</p>}
+          <div style={{ color: GOLD, fontSize: car.heroStyle === "floating" ? "clamp(16px, 2.2vw, 24px)" : "clamp(18px, 2.5vw, 26px)", fontWeight: 500, letterSpacing: "0.03em", margin: car.heroStyle === "floating" ? "0 0 18px" : "0 0 32px", textShadow: "0 2px 10px rgba(0,0,0,0.3)" }}>{fmt(car.price)}</div>
           <div style={{ display: "flex", gap: 10, justifyContent: car.heroStyle === "floating" ? "center" : "flex-start", marginTop: 28 }}>
-            <button onClick={() => onSelectCar(car)} style={{ padding: "11px 22px", background: "transparent", color: "#2A2520", border: `1px solid ${SILVER}cc`, borderRadius: 2, fontWeight: 400, fontSize: 11, cursor: "pointer", letterSpacing: "0.12em", textTransform: "uppercase", transition: "all 0.25s" }}>
+            <button onClick={() => onSelectCar(car)} style={{ padding: "11px 22px", background: GOLD, color: "#fff", border: `1px solid ${SILVER}`, borderRadius: 2, fontWeight: 600, fontSize: 11, cursor: "pointer", letterSpacing: "0.12em", textTransform: "uppercase", transition: "all 0.25s" }}>
               Lihat Detail & Rapor
             </button>
-            <button onClick={() => document.getElementById("katalog").scrollIntoView({ behavior: "smooth" })} style={{ padding: "11px 22px", background: "transparent", color: "rgba(255,255,255,0.6)", border: "1px solid rgba(255,255,255,0.25)", borderRadius: 2, fontWeight: 400, fontSize: 11, cursor: "pointer", letterSpacing: "0.12em", textTransform: "uppercase", transition: "all 0.25s" }}>
+            <button onClick={() => document.getElementById("katalog").scrollIntoView({ behavior: "smooth" })} style={{ padding: "11px 22px", background: "rgba(255,255,255,0.12)", color: "#fff", border: "1px solid rgba(255,255,255,0.5)", borderRadius: 2, fontWeight: 400, fontSize: 11, cursor: "pointer", letterSpacing: "0.12em", textTransform: "uppercase", transition: "all 0.25s" }}>
               Lihat Katalog
             </button>
           </div>
@@ -638,8 +640,17 @@ export default function ZahraMobilGuestLight({ onToggleTheme }) {
       `}</style>
       <Navbar onNav={goHome} onToggleTheme={onToggleTheme} />
       {loading ? (
-        <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <div style={{ color: SILVER, fontSize: 13, letterSpacing: "0.15em", textTransform: "uppercase" }}>Memuat...</div>
+        <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "#F5F1EA" }}>
+          <div style={{ position: "relative", width: 96, height: 96, marginBottom: 24 }}>
+            <div style={{ position: "absolute", inset: 0, border: `3px solid ${SILVER}22`, borderTopColor: SILVER, borderRadius: "50%", animation: "zmSpin 1s linear infinite" }} />
+            <img src="/zahramobil/logo.png" alt="Zahra Mobil" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "56%", height: "auto", animation: "zmPulse 1.6s ease-in-out infinite" }} />
+          </div>
+          <div style={{ color: SILVER, fontSize: 12, letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 600, animation: "zmFadeInOut 1.8s ease-in-out infinite" }}>Memuat Showroom...</div>
+          <style>{`
+            @keyframes zmSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+            @keyframes zmPulse { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 50% { transform: translate(-50%, -50%) scale(1.08); opacity: 0.85; } }
+            @keyframes zmFadeInOut { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+          `}</style>
         </div>
       ) : page === "home" ? (
         <>

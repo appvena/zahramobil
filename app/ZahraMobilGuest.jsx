@@ -46,17 +46,19 @@ function Navbar({ onNav, onToggleTheme }) {
         <img src="/zahramobil/logo.png" alt="Zahra Mobil" style={{ height: "clamp(44px, 8vw, 56px)", width: "auto", flexShrink: 0, objectFit: "contain" }} />
         <span style={{ color: "#fff", fontWeight: 700, fontSize: "clamp(16px, 4vw, 24px)", letterSpacing: "0.02em", whiteSpace: "nowrap" }}>ZAHRA <span style={{ color: GOLD }}>MOBIL</span></span>
       </button>
-      <div style={{ display: "flex", gap: "clamp(8px, 2vw, 28px)", flexShrink: 1, overflow: "hidden", alignItems: "center" }}>
-        {[["Katalog", "katalog"]].map(([label, id]) => (
-          <a key={id} href={`#${id}`} onClick={() => onNav("home")} style={{ color: "rgba(255,255,255,0.85)", textDecoration: "none", fontSize: "clamp(10px, 2.2vw, 14px)", letterSpacing: "0.08em", fontWeight: 400, textTransform: "uppercase", whiteSpace: "nowrap" }}>
-            {label}
+      <div style={{ display: "flex", gap: "clamp(8px, 2vw, 28px)", alignItems: "center" }}>
+        <div style={{ display: "flex", gap: "clamp(8px, 2vw, 28px)", flexShrink: 1, overflow: "hidden" }}>
+          {[["Katalog", "katalog"]].map(([label, id]) => (
+            <a key={id} href={`#${id}`} onClick={() => onNav("home")} style={{ color: "rgba(255,255,255,0.85)", textDecoration: "none", fontSize: "clamp(10px, 2.2vw, 14px)", letterSpacing: "0.08em", fontWeight: 400, textTransform: "uppercase", whiteSpace: "nowrap" }}>
+              {label}
+            </a>
+          ))}
+          <a href="https://wa.me/628116707099" target="_blank" rel="noreferrer" style={{ color: "rgba(255,255,255,0.85)", textDecoration: "none", fontSize: "clamp(10px, 2.2vw, 14px)", letterSpacing: "0.08em", fontWeight: 400, textTransform: "uppercase", whiteSpace: "nowrap" }}>
+            Kontak
           </a>
-        ))}
-        <a href="https://wa.me/628116707099" target="_blank" rel="noreferrer" style={{ color: "rgba(255,255,255,0.85)", textDecoration: "none", fontSize: "clamp(10px, 2.2vw, 14px)", letterSpacing: "0.08em", fontWeight: 400, textTransform: "uppercase", whiteSpace: "nowrap" }}>
-          Kontak
-        </a>
+        </div>
         {onToggleTheme && (
-          <button onClick={onToggleTheme} aria-label="Ganti ke mode terang" style={{ width: 30, height: 30, borderRadius: "50%", border: "1.5px solid rgba(255,255,255,0.3)", background: "rgba(255,255,255,0.1)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, flexShrink: 0, padding: 0 }}>
+          <button onClick={onToggleTheme} aria-label="Ganti ke mode terang" style={{ width: 30, height: 30, minWidth: 30, borderRadius: "50%", border: "1.5px solid rgba(255,255,255,0.3)", background: "rgba(255,255,255,0.1)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, flexShrink: 0, padding: 0 }}>
             ☀️
           </button>
         )}
@@ -633,8 +635,17 @@ export default function ZahraMobilGuest({ onToggleTheme }) {
       `}</style>
       <Navbar onNav={goHome} onToggleTheme={onToggleTheme} />
       {loading ? (
-        <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <div style={{ color: SILVER, fontSize: 13, letterSpacing: "0.15em", textTransform: "uppercase" }}>Memuat...</div>
+        <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "#0a0a0a" }}>
+          <div style={{ position: "relative", width: 96, height: 96, marginBottom: 24 }}>
+            <div style={{ position: "absolute", inset: 0, border: `3px solid ${SILVER}22`, borderTopColor: SILVER, borderRadius: "50%", animation: "zmSpin 1s linear infinite" }} />
+            <img src="/zahramobil/logo.png" alt="Zahra Mobil" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "56%", height: "auto", animation: "zmPulse 1.6s ease-in-out infinite" }} />
+          </div>
+          <div style={{ color: SILVER, fontSize: 12, letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 600, animation: "zmFadeInOut 1.8s ease-in-out infinite" }}>Memuat Showroom...</div>
+          <style>{`
+            @keyframes zmSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+            @keyframes zmPulse { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 50% { transform: translate(-50%, -50%) scale(1.08); opacity: 0.85; } }
+            @keyframes zmFadeInOut { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+          `}</style>
         </div>
       ) : page === "home" ? (
         <>
