@@ -339,8 +339,9 @@ function Gallery({ images }) {
     <div>
       <div style={{ position: "relative", paddingTop: "62%", borderRadius: 12, overflow: "hidden", marginBottom: 12, background: "#0d0d0d" }}>
         <img src={images[active]} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain" }} />
+        <img src="/zahramobil/logo.png" alt="" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "45%", maxWidth: 220, opacity: 0.22, pointerEvents: "none", userSelect: "none" }} />
       </div>
-      <div style={{ display: "flex", gap: 10, overflowX: "auto" }}>
+      <div style={{ display: "flex", gap: 10, overflowX: "auto", paddingRight: 16, WebkitOverflowScrolling: "touch" }}>
         {images.map((img, i) => (
           <button key={i} onClick={() => setActive(i)} style={{ flexShrink: 0, width: 88, height: 60, borderRadius: 6, overflow: "hidden", border: `2px solid ${active === i ? GOLD : "transparent"}`, padding: 0, cursor: "pointer", background: "#0d0d0d" }}>
             <img src={img} alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
@@ -472,8 +473,8 @@ function MiniKredit({ price, carName }) {
     <div style={{ background: "#141414", border: "1px solid #2a2a2a", borderRadius: 12, padding: 24 }}>
       <div style={{ color: "#888", fontSize: 12, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Tanya Harga & Cicilan</div>
       <p style={{ color: "#999", fontSize: 13, lineHeight: 1.6, margin: "0 0 18px" }}>Tim sales kami siap membantu hitungkan simulasi cicilan sesuai DP dan tenor yang Anda inginkan.</p>
-      <a href={waLink} target="_blank" rel="noreferrer" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, width: "100%", padding: "13px", background: "transparent", border: `1px solid ${SILVER}`, borderRadius: 4, color: "#fff", fontSize: 12, fontWeight: 400, letterSpacing: "0.1em", textTransform: "uppercase", textDecoration: "none", boxSizing: "border-box" }}>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.07L2 22l5.07-1.33A9.96 9.96 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.6 0-3.1-.43-4.4-1.18l-.32-.19-3.26.85.87-3.18-.21-.33A7.96 7.96 0 014 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z" fill={SILVER}/><path d="M16.5 13.3c-.25-.13-1.47-.72-1.7-.8-.23-.08-.4-.13-.56.13-.17.25-.65.8-.8.97-.15.17-.3.18-.55.06-.25-.13-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.38.11-.51.13-.13.29-.32.43-.49.14-.17.19-.3.29-.48.1-.18.05-.34-.02-.48-.07-.13-.6-1.46-.83-2-.22-.53-.45-.46-.62-.47-.16-.01-.34-.01-.53-.01-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.28 0 1.35.97 2.65 1.1 2.83.14.18 1.86 2.84 4.51 3.87 2.65 1.03 2.65.69 3.12.65.47-.04 1.47-.6 1.68-1.18.2-.58.2-1.08.14-1.18-.06-.1-.23-.16-.48-.29z" fill={SILVER}/></svg>
+      <a href={waLink} target="_blank" rel="noreferrer" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, width: "100%", padding: "13px 8px", background: "transparent", border: `1px solid ${SILVER}`, borderRadius: 4, color: "#fff", fontSize: 11, fontWeight: 400, letterSpacing: "0.06em", textTransform: "uppercase", textDecoration: "none", boxSizing: "border-box", whiteSpace: "nowrap" }}>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.07L2 22l5.07-1.33A9.96 9.96 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.6 0-3.1-.43-4.4-1.18l-.32-.19-3.26.85.87-3.18-.21-.33A7.96 7.96 0 014 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z" fill={SILVER}/><path d="M16.5 13.3c-.25-.13-1.47-.72-1.7-.8-.23-.08-.4-.13-.56.13-.17.25-.65.8-.8.97-.15.17-.3.18-.55.06-.25-.13-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.38.11-.51.13-.13.29-.32.43-.49.14-.17.19-.3.29-.48.1-.18.05-.34-.02-.48-.07-.13-.6-1.46-.83-2-.22-.53-.45-.46-.62-.47-.16-.01-.34-.01-.53-.01-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.28 0 1.35.97 2.65 1.1 2.83.14.18 1.86 2.84 4.51 3.87 2.65 1.03 2.65.69 3.12.65.47-.04 1.47-.6 1.68-1.18.2-.58.2-1.08.14-1.18-.06-.1-.23-.16-.48-.29z" fill={SILVER}/></svg>
         Hubungi via WhatsApp
       </a>
     </div>
