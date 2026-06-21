@@ -130,7 +130,7 @@ function HeroSlider({ cars, onSelectCar }) {
             <div style={{ width: 32, height: 2, background: GOLD }} />
             <span style={{ color: GOLD, fontSize: 11, letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 400 }}>{car.brand} — {car.type}</span>
           </div>
-          <h1 style={{ color: "#fff", fontSize: car.heroStyle === "floating" ? "clamp(28px, 4.5vw, 56px)" : "clamp(36px, 5vw, 68px)", fontWeight: 300, lineHeight: 1.08, margin: car.heroStyle === "floating" ? "0 0 10px" : "0 0 16px", letterSpacing: "0.01em" }}>{car.model}</h1>
+          <h1 style={{ color: "#fff", fontSize: car.heroStyle === "floating" ? "clamp(28px, 4.5vw, 56px)" : "clamp(36px, 5vw, 68px)", fontWeight: 300, lineHeight: 1.08, margin: car.heroStyle === "floating" ? "0 0 10px" : "0 0 16px", letterSpacing: "0.01em", textTransform: "uppercase" }}>{car.model}</h1>
           {car.heroStyle !== "floating" && <p style={{ color: "rgba(255,255,255,0.7)", fontSize: 16, lineHeight: 1.7, margin: "0 0 12px", maxWidth: 480 }}>{car.desc}</p>}
           <div style={{ color: GOLD, fontSize: car.heroStyle === "floating" ? "clamp(16px, 2.2vw, 24px)" : "clamp(18px, 2.5vw, 26px)", fontWeight: 300, letterSpacing: "0.03em", margin: car.heroStyle === "floating" ? "0 0 18px" : "0 0 32px" }}>{fmt(car.price)}</div>
           <div style={{ display: "flex", gap: 10, justifyContent: car.heroStyle === "floating" ? "center" : "flex-start", marginTop: 28 }}>
@@ -191,7 +191,7 @@ function CarCard({ car, onView }) {
       </div>
       <div style={{ padding: "18px 20px 20px" }}>
         <div style={{ color: GOLD, fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: 600, marginBottom: 6 }}>{car.brand} · {car.type}</div>
-        <h3 style={{ color: "#f5f5f5", fontSize: 18, fontWeight: 700, margin: "0 0 10px", lineHeight: 1.2 }}>{car.model}</h3>
+        <h3 style={{ color: "#f5f5f5", fontSize: 18, fontWeight: 700, margin: "0 0 10px", lineHeight: 1.2, textTransform: "uppercase" }}>{car.model}</h3>
         <div style={{ display: "flex", gap: 16, marginBottom: 14, flexWrap: "wrap" }}>
           {[["📅", car.year], ["⚡", car.transmission], ["🔢", `${car.km.toLocaleString("id-ID")} km`]].map(([icon, val]) => (
             <span key={val} style={{ color: "#888", fontSize: 12 }}>{icon} {val}</span>
@@ -499,7 +499,7 @@ function DetailPage({ car, onBack, onCheckoutSubmit }) {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 28, flexWrap: "wrap", gap: 16 }}>
           <div>
             <div style={{ color: GOLD, fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 600, marginBottom: 8 }}>{car.brand} · {car.type} · {car.year}</div>
-            <h1 style={{ color: "#fff", fontSize: "clamp(28px, 4vw, 42px)", fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>{car.model}</h1>
+            <h1 style={{ color: "#fff", fontSize: "clamp(28px, 4vw, 42px)", fontWeight: 800, margin: 0, letterSpacing: "-0.02em", textTransform: "uppercase" }}>{car.model}</h1>
           </div>
           <div style={{ textAlign: "right" }}>
             <StatusBadge status={car.status} />
