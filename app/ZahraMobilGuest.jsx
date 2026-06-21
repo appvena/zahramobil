@@ -501,7 +501,7 @@ function DetailPage({ car, onBack, onCheckoutSubmit }) {
         </div>
 
         <div className="zm-grid-detail" style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr", gap: 32, marginBottom: 40 }}>
-          <div>
+          <div style={{ minWidth: 0 }}>
             <div style={{ display: "flex", gap: 8, marginBottom: 20, borderBottom: "1px solid #2a2a2a" }}>
               {[["galeri", "📷 Galeri Foto"], ["inspeksi", "🔍 Laporan Inspeksi"], ["spesifikasi", "📋 Spesifikasi"]].map(([key, label]) => (
                 <button key={key} onClick={() => setTab(key)} style={{ padding: "12px 18px", background: "none", border: "none", borderBottom: `2.5px solid ${tab === key ? GOLD : "transparent"}`, color: tab === key ? GOLD : "#777", fontSize: 13.5, fontWeight: 600, cursor: "pointer" }}>
@@ -524,7 +524,7 @@ function DetailPage({ car, onBack, onCheckoutSubmit }) {
             )}
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 20, minWidth: 0 }}>
             <MiniKredit price={car.price} carName={`${car.brand} ${car.model}`} />
             {car.status !== "Terjual" ? (
               <InstantCheckout car={car} onSubmit={onCheckoutSubmit} />
