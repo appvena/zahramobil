@@ -598,6 +598,20 @@ export default function ZahraMobilGuest({ onToggleTheme }) {
     return () => unsub();
   }, []);
 
+  // Buka langsung halaman detail mobil kalau ada parameter ?car=ID di URL (dipakai oleh QR code kwitansi)
+  useEffect(() => {
+    if (loading || cars.length === 0) return;
+    const params = new URLSearchParams(window.location.search);
+    const carId = params.get("car");
+    if (carId) {
+      const found = cars.find(c => c.id === carId);
+      if (found) {
+        setSelectedCar(found);
+        setPage("detail");
+      }
+    }
+  }, [loading, cars]);
+
   const viewDetail = (car) => { setSelectedCar(car); setPage("detail"); window.scrollTo(0, 0); };
   const backHome = () => { setPage("home"); setTimeout(() => document.getElementById("katalog")?.scrollIntoView(), 50); };
   const goHome = () => { setPage("home"); window.scrollTo(0, 0); };
