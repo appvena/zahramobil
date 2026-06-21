@@ -337,13 +337,13 @@ function Gallery({ images }) {
   const [active, setActive] = useState(0);
   return (
     <div>
-      <div style={{ position: "relative", paddingTop: "58%", borderRadius: 12, overflow: "hidden", marginBottom: 12, background: "#0d0d0d" }}>
-        <img src={images[active]} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+      <div style={{ position: "relative", paddingTop: "62%", borderRadius: 12, overflow: "hidden", marginBottom: 12, background: "#0d0d0d" }}>
+        <img src={images[active]} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain" }} />
       </div>
       <div style={{ display: "flex", gap: 10, overflowX: "auto" }}>
         {images.map((img, i) => (
-          <button key={i} onClick={() => setActive(i)} style={{ flexShrink: 0, width: 88, height: 60, borderRadius: 6, overflow: "hidden", border: `2px solid ${active === i ? GOLD : "transparent"}`, padding: 0, cursor: "pointer", background: "none" }}>
-            <img src={img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          <button key={i} onClick={() => setActive(i)} style={{ flexShrink: 0, width: 88, height: 60, borderRadius: 6, overflow: "hidden", border: `2px solid ${active === i ? GOLD : "transparent"}`, padding: 0, cursor: "pointer", background: "#0d0d0d" }}>
+            <img src={img} alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
           </button>
         ))}
       </div>
@@ -485,7 +485,7 @@ function DetailPage({ car, onBack, onCheckoutSubmit }) {
   const [tab, setTab] = useState("galeri");
   return (
     <div style={{ background: "#0a0a0a", minHeight: "100vh" }}>
-      <div style={{ padding: "100px 48px 0", maxWidth: 1200, margin: "0 auto" }}>
+      <div style={{ padding: "100px clamp(16px, 4vw, 48px) 0", maxWidth: 1200, margin: "0 auto", boxSizing: "border-box" }}>
         <button onClick={onBack} style={{ background: "none", border: "none", color: "#888", fontSize: 13, cursor: "pointer", marginBottom: 24, display: "flex", alignItems: "center", gap: 6 }}>← Kembali ke Katalog</button>
 
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 28, flexWrap: "wrap", gap: 16 }}>
