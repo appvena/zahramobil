@@ -98,7 +98,7 @@ function HeroSlider({ cars, onSelectCar }) {
   return (
     <section style={{ position: "relative", width: "100%", height: "100vh", overflow: "hidden", background: car.heroStyle === "floating" ? "linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #0d0d0d 100%)" : "#0a0a0a" }}>
       {prevCar && prevCar.heroStyle !== "floating" && (
-        <div key={`prev-${prev}`} style={{ position: "absolute", inset: 0, zIndex: 1, backgroundImage: `url(${prevCar.images[0]})`, backgroundSize: "cover", backgroundPosition: "center 35%", animation: `heroBgOut${dir > 0 ? "Left" : "Right"} 0.9s cubic-bezier(.77,0,.18,1) forwards` }} />
+        <div key={`prev-${prev}`} style={{ position: "absolute", inset: 0, zIndex: 1, backgroundImage: `url(${prevCar.images[0]})`, backgroundSize: "cover", backgroundPosition: "center", animation: `heroBgOut${dir > 0 ? "Left" : "Right"} 0.9s cubic-bezier(.77,0,.18,1) forwards` }} />
       )}
       {prevCar && prevCar.heroStyle === "floating" && (
         <div key={`previmg-${prev}`} style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: "52vh", zIndex: 1, animation: `heroBgOut${dir > 0 ? "Left" : "Right"} 0.9s cubic-bezier(.77,0,.18,1) forwards`, display: "flex", alignItems: "flex-end", justifyContent: "center" }}>
@@ -111,7 +111,7 @@ function HeroSlider({ cars, onSelectCar }) {
           <img src={car.images[0]} alt={car.model} style={{ maxWidth: "92%", maxHeight: "100%", width: "auto", height: "auto", objectFit: "contain", filter: "drop-shadow(0 30px 40px rgba(0,0,0,0.6))" }} />
         </div>
       ) : (
-        <div key={`cur-${cur}`} style={{ position: "absolute", inset: 0, zIndex: 2, backgroundImage: `url(${car.images[0]})`, backgroundSize: "cover", backgroundPosition: "center 35%", animation: animating ? `heroBgIn${dir > 0 ? "Right" : "Left"} 0.9s cubic-bezier(.77,0,.18,1) forwards` : "none" }} />
+        <div key={`cur-${cur}`} style={{ position: "absolute", inset: 0, zIndex: 2, backgroundImage: `url(${car.images[0]})`, backgroundSize: "cover", backgroundPosition: "center", animation: animating ? `heroBgIn${dir > 0 ? "Right" : "Left"} 0.9s cubic-bezier(.77,0,.18,1) forwards` : "none" }} />
       )}
 
       {car.heroStyle !== "floating" && (
