@@ -339,7 +339,7 @@ function Gallery({ images }) {
     <div>
       <div style={{ position: "relative", paddingTop: "62%", borderRadius: 12, overflow: "hidden", marginBottom: 12, background: "#0d0d0d" }}>
         <img src={images[active]} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain" }} />
-        <img src="/zahramobil/logo.png" alt="" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "45%", maxWidth: 220, opacity: 0.22, pointerEvents: "none", userSelect: "none" }} />
+        <img src="/zahramobil/logo.png" alt="" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "28%", maxWidth: 130, opacity: 0.2, pointerEvents: "none", userSelect: "none" }} />
       </div>
       <div style={{ display: "flex", gap: 10, overflowX: "auto", paddingRight: 16, WebkitOverflowScrolling: "touch" }}>
         {images.map((img, i) => (
