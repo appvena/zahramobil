@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { db } from "./firebase";
-import { collection, onSnapshot, addDoc, serverTimestamp } from "firebase/firestore";
+import { collection, onSnapshot, addDoc, serverTimestamp, doc, getDoc } from "firebase/firestore";
 
 // ─── MOCK DATA ───────────────────────────────────────────────────────────────
 const INSPECTION_CATEGORIES = [
@@ -494,6 +494,107 @@ function MiniKredit({ price, carName }) {
 }
 
 // ─── DETAIL PAGE ─────────────────────────────────────────────────────────────
+// ─── HALAMAN VERIFIKASI KWITANSI (diakses lewat scan QR Code di kwitansi fisik) ───────────────
+function VerifyPage({ txId }) {
+  const [status, setStatus] = useState("loading"); // loading | found | notfound | error
+  const [tx, setTx] = useState(null);
+  const [car, setCar] = useState(null);
+
+  useEffect(() => {
+    if (!txId) { setStatus("notfound"); return; }
+    (async () => {
+      try {
+        const txSnap = await getDoc(doc(db, "transactions", txId));
+        if (!txSnap.exists()) { setStatus("notfound"); return; }
+        const txData = { id: txSnap.id, ...txSnap.data() };
+        setTx(txData);
+        if (txData.carId) {
+          const carSnap = await getDoc(doc(db, "cars", txData.carId));
+          if (carSnap.exists()) setCar({ id: carSnap.id, ...carSnap.data() });
+        }
+        setStatus("found");
+      } catch (e) {
+        console.error("Gagal memverifikasi kwitansi:", e);
+        setStatus("error");
+      }
+    })();
+  }, [txId]);
+
+  const row = (label, value) => (
+    <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 0", borderBottom: "1px solid #E5DDCC" }}>
+      <span style={{ color: "#7A6F5E", fontSize: 13 }}>{label}</span>
+      <span style={{ color: "#2A2520", fontSize: 13, fontWeight: 600, textAlign: "right", maxWidth: "60%" }}>{value || "-"}</span>
+    </div>
+  );
+
+  return (
+    <div style={{ minHeight: "100vh", background: "#F5F1EA", padding: "100px clamp(16px, 4vw, 48px) 60px", boxSizing: "border-box" }}>
+      <div style={{ maxWidth: 560, margin: "0 auto" }}>
+        <div style={{ textAlign: "center", marginBottom: 28 }}>
+          <img src="/zahramobil/logo.png" alt="Zahra Mobil" style={{ height: 56, marginBottom: 12 }} />
+          <h1 style={{ color: "#2A2520", fontSize: 22, fontWeight: 700, margin: 0 }}>Verifikasi Kwitansi</h1>
+          <p style={{ color: "#7A6F5E", fontSize: 13, marginTop: 6 }}>Hasil scan QR Code dari kwitansi pembayaran Zahra Mobil</p>
+        </div>
+
+        {status === "loading" && (
+          <div style={{ textAlign: "center", color: "#7A6F5E", padding: "60px 0" }}>Memverifikasi data...</div>
+        )}
+
+        {status === "notfound" && (
+          <div style={{ background: "#FDFBF7", border: "1px solid #d97a7a", borderRadius: 12, padding: 28, textAlign: "center" }}>
+            <div style={{ fontSize: 36, marginBottom: 10 }}>⚠️</div>
+            <div style={{ color: "#c0392b", fontWeight: 700, fontSize: 15, marginBottom: 6 }}>Kwitansi Tidak Ditemukan</div>
+            <div style={{ color: "#7A6F5E", fontSize: 13 }}>Data transaksi ini tidak ada dalam sistem kami. Kwitansi mungkin tidak sah atau telah dihapus.</div>
+          </div>
+        )}
+
+        {status === "error" && (
+          <div style={{ background: "#FDFBF7", border: "1px solid #d97a7a", borderRadius: 12, padding: 28, textAlign: "center" }}>
+            <div style={{ color: "#c0392b", fontSize: 13 }}>Terjadi kesalahan saat memverifikasi. Coba scan ulang atau hubungi showroom.</div>
+          </div>
+        )}
+
+        {status === "found" && tx && (
+          <>
+            <div style={{ background: "#FDFBF7", border: "1px solid #b8e0b8", borderRadius: 12, padding: "14px 20px", marginBottom: 20, display: "flex", alignItems: "center", gap: 10 }}>
+              <span style={{ fontSize: 20 }}>✅</span>
+              <span style={{ color: "#2e8b3a", fontWeight: 700, fontSize: 14 }}>Kwitansi Ini Valid & Tercatat di Sistem Zahra Mobil</span>
+            </div>
+
+            <div style={{ background: "#FDFBF7", border: "1px solid #E5DDCC", borderRadius: 12, padding: 24, marginBottom: 16 }}>
+              <div style={{ color: GOLD, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 700, marginBottom: 12 }}>Detail Pembayaran</div>
+              {row("Nama Penyetor", tx.namaPenyetor)}
+              {row("Jenis Transaksi", `${tx.category || ""} - ${tx.type || ""}`)}
+              {row("Jumlah Dibayar", fmt(tx.amount || 0))}
+              {row("Keterangan", tx.notes)}
+              {row("Tanggal", tx.date ? new Date(tx.date).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" }) : "-")}
+            </div>
+
+            {car && (
+              <div style={{ background: "#FDFBF7", border: "1px solid #E5DDCC", borderRadius: 12, padding: 24 }}>
+                <div style={{ color: GOLD, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 700, marginBottom: 12 }}>Data Kendaraan</div>
+                {car.images?.[0] && (
+                  <img src={car.images[0]} alt="" style={{ width: "100%", borderRadius: 8, marginBottom: 14, aspectRatio: "16/9", objectFit: "cover" }} />
+                )}
+                {row("Unit", `${car.brand || ""} ${car.model || ""}`.toUpperCase())}
+                {row("No. Polisi", (car.noPolisi || "").toUpperCase())}
+                {row("No. Rangka", (car.noRangka || "").toUpperCase())}
+                {row("No. Mesin", (car.noMesin || "").toUpperCase())}
+                {row("Tahun / Warna", `${car.year || "-"} / ${(car.color || "-").toUpperCase()}`)}
+                {row("Harga Unit", fmt(car.price || 0))}
+              </div>
+            )}
+
+            <p style={{ color: "#8a7f6e", fontSize: 11, textAlign: "center", marginTop: 24 }}>
+              Halaman ini hanya bisa diakses dengan men-scan QR Code asli dari kwitansi fisik Zahra Mobil.
+            </p>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function DetailPage({ car, onBack, onCheckoutSubmit }) {
   const [tab, setTab] = useState("galeri");
   return (
@@ -587,6 +688,14 @@ export default function ZahraMobilGuestLight({ onToggleTheme }) {
   const [selectedCar, setSelectedCar] = useState(null);
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [verifyTxId, setVerifyTxId] = useState(null);
+
+  // Cek parameter ?verify=ID di URL segera saat halaman dibuka (dipakai oleh QR Code kwitansi).
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const txId = params.get("verify");
+    if (txId) setVerifyTxId(txId);
+  }, []);
 
   useEffect(() => {
     const unsub = onSnapshot(collection(db, "cars"), (snapshot) => {
@@ -633,6 +742,11 @@ export default function ZahraMobilGuestLight({ onToggleTheme }) {
       alert("Maaf, pesanan gagal terkirim. Silakan coba lagi atau hubungi kami via WhatsApp.");
     }
   };
+
+  // Halaman verifikasi kwitansi ditampilkan mandiri, terpisah dari struktur Navbar/Hero biasa
+  if (verifyTxId) {
+    return <VerifyPage txId={verifyTxId} />;
+  }
 
   return (
     <div style={{ background: "#F5F1EA", minHeight: "100vh", fontFamily: "'Poppins', 'Inter', system-ui, sans-serif", color: "#2A2520", overflowX: "hidden", width: "100%", maxWidth: "100vw", boxSizing: "border-box" }}>
